@@ -1,0 +1,10 @@
+Wiki Plugin - activity
+======================
+
+0.1.0
+  date: 2013-11-17
+  changes:
+    - Refactored from wiki/client/plugins into individual repo.
+    - Check for changes against Smallest-Federated-Wiki repo version
+      + two repo's have the same code.
+
