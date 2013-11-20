@@ -17,6 +17,11 @@
       "name": "Nick Niemeir",
       "email": "nick.niemeir@gmail.com",
       "url": "http://nrn.io"
+    },
+    {
+      "name": "Paul Rodwell",
+      "email": "paul.rodwell@btinternet.com",
+      "url": "http://wiki-paul90.rhcloud.com"
     }
   ],
   "scripts": {
@@ -30,10 +35,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "to be confirmed"
+    "url": "https://github.com/paul90/wiki-plugin-activity.git"
   },
   "bugs": {
-    "url": "to be confirmed"
+    "url": "https://github.com/paul90/wiki-plugin-activity/issues"
   },
   "engines": {
     "node": ">0.10"
