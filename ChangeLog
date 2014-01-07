@@ -8,3 +8,7 @@ Wiki Plugin - activity
     - Check for changes against Smallest-Federated-Wiki repo version
       + two repo's have the same code.
 
+0.1.1
+  date: 2014-01-07
+  changes:
+    - Migrated to fedwiki GitHub organization
