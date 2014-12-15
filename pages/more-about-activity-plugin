@@ -59,9 +59,9 @@
       "text": "See [[About Changes Plugin]] to list changes kept in browser local storage."
     },
     {
-      "type": "paragraph",
+      "type": "html",
       "id": "258eebc705c5583e",
-      "text": "<h3> Related How Tos"
+      "text": "<h3>Related How Tos</h3>"
     },
     {
       "type": "reference",
@@ -705,6 +705,27 @@
         "text": "See [https://github.com/fedwiki/wiki-plugin-activity GitHub] for plugin source."
       },
       "date": 1389090521786
+    },
+    {
+      "type": "edit",
+      "id": "258eebc705c5583e",
+      "item": {
+        "type": "html",
+        "id": "258eebc705c5583e",
+        "text": "<h3> Related How Tos"
+      },
+      "date": 1418300483985
+    },
+    {
+      "type": "edit",
+      "id": "258eebc705c5583e",
+      "item": {
+        "type": "html",
+        "id": "258eebc705c5583e",
+        "text": "<h3>Related How Tos</h3>"
+      },
+      "date": 1418300493908
     }
-  ]
+  ],
+  "plugin": "activity"
 }
