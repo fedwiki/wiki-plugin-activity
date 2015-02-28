@@ -1,0 +1,6 @@
+Authors ordered by first contribution
+
+Ward Cunningham <ward@c2.com>
+Nick Niemeir <nick.niemeir@gmail.com>
+Marcin Cieslak <saper@saper.info>
+Paul Rodwell <paul.rodwell@btinternet.com>

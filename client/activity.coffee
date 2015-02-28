@@ -1,3 +1,10 @@
+###
+ * Federated Wiki : Activity Plugin
+ *
+ * Licensed under the MIT license.
+ * https://github.com/fedwiki/wiki-plugin-activity/blob/master/LICENSE.txt
+###
+
 window.plugins.activity =
   emit: ($item, item) ->
   bind: ($item, item) ->
@@ -45,7 +52,7 @@ window.plugins.activity =
           </a><br>
         """
 
-    
+
     merge = (neighborhood) ->
       pages = {}
       for site, map of neighborhood
