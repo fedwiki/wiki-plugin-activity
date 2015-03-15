@@ -5,9 +5,6 @@
  * https://github.com/fedwiki/wiki-plugin-activity/blob/master/LICENSE.txt
 ###
 
-since = 0
-listing = []
-errors = 0
 
 escape = (line) ->
   line
@@ -15,40 +12,39 @@ escape = (line) ->
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
 
-parse = (text) ->
-  listing = []
-  errors = 0
-  for line in text.split /\r?\n/
-    continue unless words = line.match /\S+/g
-    # switch words[0]
-    #   when 'SINCE' then since = +(words[1] || 1)
-    html = escape line
-    try
-      [match, op, arg] = line.match(/^\s*(\w*)\s*(.*)$/)
-      switch op
-        when '' then
-        when 'SINCE'
-          if match = arg.match /^(\d+) hours?$/i
-            since = Date.now() - ((+match[1])*1000*60*60)
-          else if match = arg.match /^(\d+) days?$/i
-            since = Date.now() - ((+match[1])*1000*60*60*24)
-          else if match = arg.match /^(\d+) weeks?$/i
-            since = Date.now() - ((+match[1])*1000*60*60*24*7)
-          else if arg.match /^(sun|mon|tue|wed|thu|fri|sat)$/i
-            since = ((new Date).getDay()+7-2)%7
-          else throw {message:"don't know SINCE '#{arg}' argument"}
-        when /SINCE (mon|tue|wed|thr|fri|sat|sun)/
-        else throw {message:"don't know '#{op}' command"}
-    catch err
-      errors++
-      html = """<span style="background-color:#fdd;width:100%;" title="#{err.message}">#{html}</span>"""
-    listing.push html
-
-
 emit = ($item, item) ->
-  parse item.text || ''
 
 bind = ($item, item) ->
+
+  parse = (text) ->
+    listing = []
+    errors = 0
+    for line in text.split /\r?\n/
+      continue unless words = line.match /\S+/g
+      # switch words[0]
+      #   when 'SINCE' then since = +(words[1] || 1)
+      html = escape line
+      try
+        [match, op, arg] = line.match(/^\s*(\w*)\s*(.*)$/)
+        switch op
+          when '' then
+          when 'SINCE'
+            if match = arg.match /^(\d+) hours?$/i
+              since = Date.now() - ((+match[1])*1000*60*60)
+            else if match = arg.match /^(\d+) days?$/i
+              since = Date.now() - ((+match[1])*1000*60*60*24)
+            else if match = arg.match /^(\d+) weeks?$/i
+              since = Date.now() - ((+match[1])*1000*60*60*24*7)
+            else if arg.match /^(sun|mon|tue|wed|thu|fri|sat)$/i
+              since = ((new Date).getDay()+7-2)%7
+            else throw {message:"don't know SINCE '#{arg}' argument"}
+          when /SINCE (mon|tue|wed|thr|fri|sat|sun)/
+          else throw {message:"don't know '#{op}' command"}
+      catch err
+        errors++
+        html = """<span style="background-color:#fdd;width:100%;" title="#{err.message}">#{html}</span>"""
+      console.log "in parse: "+ since
+      listing.push html
 
   display = (pages) ->
     $item.empty()
@@ -97,6 +93,13 @@ bind = ($item, item) ->
       """
     $item.append "<p><i>#{omitted} more older titles</i></p>" if omitted > 0
 
+  since = 0
+  listing = []
+  errors = 0
+
+  parse item.text || ''
+  console.log "back from parser: "+since
+
   omitted = 0
   merge = (neighborhood) ->
     pages = {}
@@ -130,4 +133,3 @@ bind = ($item, item) ->
 
 window.plugins.activity = {emit, bind} if window?
 module.exports = {} if module?
-
