@@ -16,6 +16,10 @@ emit = ($item, item) ->
 
 bind = ($item, item) ->
 
+  since = 0
+  listing = []
+  errors = 0
+
   parse = (text) ->
     listing = []
     errors = 0
@@ -93,9 +97,7 @@ bind = ($item, item) ->
       """
     $item.append "<p><i>#{omitted} more older titles</i></p>" if omitted > 0
 
-  since = 0
-  listing = []
-  errors = 0
+
 
   parse item.text || ''
   console.log "back from parser: "+since
