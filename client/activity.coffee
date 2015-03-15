@@ -92,7 +92,7 @@ bind = ($item, item) ->
           href="/#{sites[0].page.slug}"
           data-page-name="#{sites[0].page.slug}"
           title="#{context}">
-          #{sites[0].page.title || sites[0].page.slug}
+          #{escape(sites[0].page.title || sites[0].page.slug)}
         </a><br>
       """
     $item.append "<p><i>#{omitted} more older titles</i></p>" if omitted > 0
