@@ -44,7 +44,10 @@ bind = ($item, item) ->
             else if match = arg.match /^(sun|mon|tue|wed|thu|fri|sat).*$/i
               days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
               since = todayStart - ((((new Date).getDay() + 7 - (days.indexOf(match[1].toLowerCase())))%7) * 1000*60*60*24)
-            else throw {message:"don't know SINCE '#{arg}' argument"}
+            else if !(isNaN(Date.parse(arg)))
+              since = Date.parse(arg)
+            else
+              throw {message:"don't know SINCE '#{arg}' argument"}
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
@@ -102,7 +105,7 @@ bind = ($item, item) ->
   parse item.text || ''
 
   omitted = 0
-  
+
   merge = (neighborhood) ->
     pages = {}
     for site, map of neighborhood
