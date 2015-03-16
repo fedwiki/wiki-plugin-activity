@@ -28,6 +28,8 @@ bind = ($item, item) ->
       # switch words[0]
       #   when 'SINCE' then since = +(words[1] || 1)
       html = escape line
+      today = new Date
+      todayStart = today.setHours(0,0,0,0)
       try
         [match, op, arg] = line.match(/^\s*(\w*)\s*(.*)$/)
         switch op
@@ -39,15 +41,14 @@ bind = ($item, item) ->
               since = Date.now() - ((+match[1])*1000*60*60*24)
             else if match = arg.match /^(\d+) weeks?$/i
               since = Date.now() - ((+match[1])*1000*60*60*24*7)
-            else if arg.match /^(sun|mon|tue|wed|thu|fri|sat)$/i
-              since = ((new Date).getDay()+7-2)%7
+            else if match = arg.match /^(sun|mon|tue|wed|thu|fri|sat).*$/i
+              days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+              since = todayStart - ((((new Date).getDay() + 7 - (days.indexOf(match[1].toLowerCase())))%7) * 1000*60*60*24)
             else throw {message:"don't know SINCE '#{arg}' argument"}
-          when /SINCE (mon|tue|wed|thr|fri|sat|sun)/
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
         html = """<span style="background-color:#fdd;width:100%;" title="#{err.message}">#{html}</span>"""
-      console.log "in parse: "+ since
       listing.push html
 
   display = (pages) ->
@@ -55,6 +56,7 @@ bind = ($item, item) ->
     if errors
       $item.append listing
       return
+    $item.append "<h3>Activity Since #{(new Date(since)).toDateString()}</h3>" if since
     now = (new Date).getTime();
     sections = [
       {date: now-1000*60*60*24*365, period: 'Years'}
@@ -97,12 +99,10 @@ bind = ($item, item) ->
       """
     $item.append "<p><i>#{omitted} more older titles</i></p>" if omitted > 0
 
-
-
   parse item.text || ''
-  console.log "back from parser: "+since
 
   omitted = 0
+  
   merge = (neighborhood) ->
     pages = {}
     for site, map of neighborhood
@@ -131,7 +131,7 @@ bind = ($item, item) ->
 
   $item.dblclick -> wiki.textEditor $item, item
 
-  console.log 'since', since
+  console.log 'since : ', (new Date(since)).toString()
 
 window.plugins.activity = {emit, bind} if window?
 module.exports = {} if module?
