@@ -134,7 +134,6 @@ bind = ($item, item) ->
 
   $item.dblclick -> wiki.textEditor $item, item
 
-  console.log 'since : ', (new Date(since)).toString()
 
 window.plugins.activity = {emit, bind} if window?
 module.exports = {} if module?
