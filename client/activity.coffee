@@ -59,7 +59,7 @@ bind = ($item, item) ->
     if errors
       $item.append listing
       return
-    $item.append "<h3>Activity Since #{(new Date(since)).toDateString()}</h3>" if since
+    $item.append "<h2>Activity Since #{(new Date(since)).toDateString()}</h2>" if since
     now = (new Date).getTime();
     sections = [
       {date: now-1000*60*60*24*365, period: 'Years'}
