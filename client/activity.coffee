@@ -41,7 +41,7 @@ bind = ($item, item) ->
               since = Date.now() - ((+match[1])*1000*60*60*24)
             else if match = arg.match /^(\d+) weeks?$/i
               since = Date.now() - ((+match[1])*1000*60*60*24*7)
-            else if match = arg.match /^(sun|mon|tue|wed|thu|fri|sat).*$/i
+            else if match = arg.match /^(sun|mon|tue|wed|thu|fri|sat)[a-z]*$/i
               days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
               since = todayStart - ((((new Date).getDay() + 7 - (days.indexOf(match[1].toLowerCase())))%7) * 1000*60*60*24)
             else if !(isNaN(Date.parse(arg)))
