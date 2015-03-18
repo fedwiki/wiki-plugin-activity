@@ -19,6 +19,7 @@ bind = ($item, item) ->
   since = 0
   listing = []
   errors = 0
+  includeNeighbors = true
 
   parse = (text) ->
     listing = []
@@ -48,6 +49,17 @@ bind = ($item, item) ->
               since = Date.parse(arg)
             else
               throw {message:"don't know SINCE '#{arg}' argument"}
+
+          when 'NEIGHBORHOOD'
+            if arg.match /^yes/i
+              console.log "Neighbors included"
+              includeNeighbors = true
+            else if arg.match /^no/i
+              console.log "Exclude neighbors"
+              includeNeighbors = false
+            else
+              throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
+
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
@@ -110,10 +122,11 @@ bind = ($item, item) ->
     pages = {}
     for site, map of neighborhood
       continue if map.sitemapRequestInflight or !(map.sitemap?)
-      for each in map.sitemap
-        sites = pages[each.slug]
-        pages[each.slug] = sites = [] unless sites?
-        sites.push {site: site, page: each}
+      if includeNeighbors or (!includeNeighbors and site == location.host)
+        for each in map.sitemap
+          sites = pages[each.slug]
+          pages[each.slug] = sites = [] unless sites?
+          sites.push {site: site, page: each}
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
