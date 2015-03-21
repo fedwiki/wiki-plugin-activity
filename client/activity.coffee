@@ -87,15 +87,11 @@ bind = ($item, item) ->
     if errors
       $item.append listing
       return
-    header = "<heading> <h2>Page"
-    header += " activity since #{(new Date(since)).toDateString()}" if since
-    if twins > 0
-      if since
-        header += ",<br/>and "
-      else
-        header += "s "
-      header += "with more than #{twins} twins"
-    header += "</h2></heading>"
+    header = "<heading>Page Activity"
+    header += "<br/>since #{(new Date(since)).toDateString()}" if since
+    header += "<br/>more than #{twins} twins" if twins > 0
+    header += "<br/>sorted by page title" if sortOrder is "title"
+    header += "<br/></heading>"
     $item.append "#{header}"
     now = (new Date).getTime();
     sections = [
