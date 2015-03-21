@@ -21,6 +21,7 @@ bind = ($item, item) ->
   errors = 0
   includeNeighbors = true
   twins = 0
+  sortOrder = "date"
 
   parse = (text) ->
     listing = []
@@ -61,11 +62,19 @@ bind = ($item, item) ->
             else
               throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
 
-          when "TWINS"
+          when 'TWINS'
             if match = arg.match /^(\d+)/
               twins = +match[1]
             else
               throw {message:"don't know TWINS '#{arg}' argument"}
+
+          when 'SORT'
+            if arg.match /^titles?$/i
+              sortOrder = "title"
+            else if arg.match /^date/i
+              sortOrder = "date"
+            else
+              throw {message: "don't know SORT '#{arg}' argument"}
 
           else throw {message:"don't know '#{op}' command"}
       catch err
@@ -100,16 +109,26 @@ bind = ($item, item) ->
       {date: now-1000, period: 'a Minute'}
       {date: now, period: 'Seconds'}
     ]
-    bigger = now
+    if sortOrder == "title"
+      bigger = ''
+    else
+      bigger = now
     for sites in pages
       if (sites.length >= twins) || twins == 0
-        smaller = sites[0].page.date
-        for section in sections
-          if section.date > smaller and section.date < bigger
+        if sortOrder == "title"
+          smaller = sites[0].page.title.substr(0,1).toLowerCase()
+          if smaller != bigger
             $item.append """
-              <h3> Within #{section.period} </h3>
+              <b>#{smaller}</b><br>
             """
-            break
+        else
+          smaller = sites[0].page.date
+          for section in sections
+            if section.date > smaller and section.date < bigger
+              $item.append """
+                <h3> Within #{section.period} </h3>
+              """
+              break
         bigger = smaller
         for each, i in sites
           joint = if sites[i+1]?.page.date == each.page.date then "" else "&nbsp"
@@ -151,6 +170,9 @@ bind = ($item, item) ->
         (b.page.date || 0) - (a.page.date || 0)
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
+      if sortOrder == "title"
+        a[0].page.title.localeCompare(b[0].page.title,{sensitivity: "accent"})
+      else
         (b[0].page.date || 0) - (a[0].page.date || 0)
 
     omitted = 0
