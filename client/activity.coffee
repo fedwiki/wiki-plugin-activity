@@ -20,6 +20,7 @@ bind = ($item, item) ->
   listing = []
   errors = 0
   includeNeighbors = true
+  twins = 0
 
   parse = (text) ->
     listing = []
@@ -60,6 +61,12 @@ bind = ($item, item) ->
             else
               throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
 
+          when "TWINS"
+            if match = arg.match /^(\d+)/
+              twins = +match[1]
+            else
+              throw {message:"don't know TWINS '#{arg}' argument"}
+
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
@@ -71,7 +78,16 @@ bind = ($item, item) ->
     if errors
       $item.append listing
       return
-    $item.append "<h2>Activity Since #{(new Date(since)).toDateString()}</h2>" if since
+    header = "<heading> <h2>Page"
+    header += " activity since #{(new Date(since)).toDateString()}" if since
+    if twins > 0
+      if since
+        header += ",<br/>and "
+      else
+        header += "s "
+      header += "with more than #{twins} twins"
+    header += "</h2></heading>"
+    $item.append "#{header}"
     now = (new Date).getTime();
     sections = [
       {date: now-1000*60*60*24*365, period: 'Years'}
@@ -86,33 +102,36 @@ bind = ($item, item) ->
     ]
     bigger = now
     for sites in pages
-      smaller = sites[0].page.date
-      for section in sections
-        if section.date > smaller and section.date < bigger
+      if (sites.length >= twins) || twins == 0
+        smaller = sites[0].page.date
+        for section in sections
+          if section.date > smaller and section.date < bigger
+            $item.append """
+              <h3> Within #{section.period} </h3>
+            """
+            break
+        bigger = smaller
+        for each, i in sites
+          joint = if sites[i+1]?.page.date == each.page.date then "" else "&nbsp"
           $item.append """
-            <h3> Within #{section.period} </h3>
+            <img class="remote"
+              title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
+              src="http://#{each.site}/favicon.png"
+              data-site="#{each.site}"
+              data-slug="#{each.page.slug}">#{joint}
           """
-          break
-      bigger = smaller
-      for each, i in sites
-        joint = if sites[i+1]?.page.date == each.page.date then "" else "&nbsp"
+        context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
         $item.append """
-          <img class="remote"
-            title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
-            src="http://#{each.site}/favicon.png"
-            data-site="#{each.site}"
-            data-slug="#{each.page.slug}">#{joint}
+          <a class="internal"
+            href="/#{sites[0].page.slug}"
+            data-page-name="#{sites[0].page.slug}"
+            title="#{context}">
+            #{escape(sites[0].page.title || sites[0].page.slug)}
+          </a><br>
         """
-      context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
-      $item.append """
-        <a class="internal"
-          href="/#{sites[0].page.slug}"
-          data-page-name="#{sites[0].page.slug}"
-          title="#{context}">
-          #{escape(sites[0].page.title || sites[0].page.slug)}
-        </a><br>
-      """
-    $item.append "<p><i>#{omitted} more older titles</i></p>" if omitted > 0
+      else
+        omitted++
+    $item.append "<p><i>#{omitted} more titles</i></p>" if omitted > 0
 
   parse item.text || ''
 
