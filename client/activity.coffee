@@ -6,6 +6,7 @@
 ###
 
 
+
 escape = (line) ->
   line
     .replace(/&/g, '&amp;')
@@ -22,6 +23,8 @@ bind = ($item, item) ->
   includeNeighbors = true
   twins = 0
   sortOrder = "date"
+  searchTerm = ''
+  searchResults = ''
 
   parse = (text) ->
     listing = []
@@ -54,10 +57,8 @@ bind = ($item, item) ->
 
           when 'NEIGHBORHOOD'
             if arg.match /^yes/i
-              console.log "Neighbors included"
               includeNeighbors = true
             else if arg.match /^no/i
-              console.log "Exclude neighbors"
               includeNeighbors = false
             else
               throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
@@ -75,6 +76,10 @@ bind = ($item, item) ->
               sortOrder = "date"
             else
               throw {message: "don't know SORT '#{arg}' argument"}
+
+          when 'SEARCH'
+            searchTerm = arg
+            searchResults = wiki.neighborhoodObject.search(searchTerm)
 
           else throw {message:"don't know '#{op}' command"}
       catch err
@@ -178,13 +183,26 @@ bind = ($item, item) ->
 
     omitted = 0
     pages.filter (e) ->
-      omitted += 1 if e[0].page.date <= since
-      e[0].page.date > since
+
+      willInclude = true
+      if since
+        if e[0].page.date <= since
+          willInclude = false
+          omitted++
+      if searchTerm && willInclude
+
+        if !(e[0].page in (finds.page for finds in searchResults.finds))
+          willInclude = false
+          omitted++
+
+      return willInclude
 
 
   display merge wiki.neighborhood
 
   $('body').on 'new-neighbor-done', (e, site) ->
+    if searchTerm
+      searchResults = wiki.neighborhoodObject.search(searchTerm)
     display merge wiki.neighborhood
 
   $item.dblclick -> wiki.textEditor $item, item
