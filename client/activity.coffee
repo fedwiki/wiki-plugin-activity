@@ -87,12 +87,17 @@ bind = ($item, item) ->
     if errors
       $item.append listing
       return
-    header = "<heading>Page Activity"
+
+    header = ""
+    header += "<br/>searching for \"#{escape searchTerm}\"" if searchTerm
     header += "<br/>since #{(new Date(since)).toDateString()}" if since
     header += "<br/>more than #{twins} twins" if twins > 0
     header += "<br/>sorted by page title" if sortOrder is "title"
-    header += "<br/></heading>"
-    $item.append "#{header}"
+    header += "<br/>excluding neighborhood" if includeNeighbors is false
+
+    if header
+      $item.append "<p><b>Page Activity #{header}</b></p>"
+
     now = (new Date).getTime();
     sections = [
       {date: now-1000*60*60*24*365, period: 'Years'}
