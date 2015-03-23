@@ -122,10 +122,10 @@ bind = ($item, item) ->
     for sites in pages
       if (sites.length >= twins) || twins == 0
         if sortOrder == "title"
-          smaller = sites[0].page.title.substr(0,1).toLowerCase()
+          smaller = sites[0].page.title.substr(0,1).toUpperCase()
           if smaller != bigger
             $item.append """
-              <b>#{smaller}</b><br>
+              <div style="width:100%; text-align:right;"><b>#{smaller}</b></span><br>
             """
         else
           smaller = sites[0].page.date
