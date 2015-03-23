@@ -205,7 +205,9 @@ bind = ($item, item) ->
       searchResults = wiki.neighborhoodObject.search(searchTerm)
     display merge wiki.neighborhood
 
-  $item.dblclick -> wiki.textEditor $item, item
+  $item.dblclick ->
+    $('body').off 'new-neighbor-done'
+    wiki.textEditor $item, item
 
 
 window.plugins.activity = {emit, bind} if window?
