@@ -6,6 +6,7 @@
 ###
 
 
+
 escape = (line) ->
   line
     .replace(/&/g, '&amp;')
@@ -19,6 +20,11 @@ bind = ($item, item) ->
   since = 0
   listing = []
   errors = 0
+  includeNeighbors = true
+  twins = 0
+  sortOrder = "date"
+  searchTerm = ''
+  searchResults = ''
 
   parse = (text) ->
     listing = []
@@ -48,6 +54,33 @@ bind = ($item, item) ->
               since = Date.parse(arg)
             else
               throw {message:"don't know SINCE '#{arg}' argument"}
+
+          when 'NEIGHBORHOOD'
+            if arg.match /^yes/i
+              includeNeighbors = true
+            else if arg.match /^no/i
+              includeNeighbors = false
+            else
+              throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
+
+          when 'TWINS'
+            if match = arg.match /^(\d+)/
+              twins = +match[1]
+            else
+              throw {message:"don't know TWINS '#{arg}' argument"}
+
+          when 'SORT'
+            if arg.match /^titles?$/i
+              sortOrder = "title"
+            else if arg.match /^date/i
+              sortOrder = "date"
+            else
+              throw {message: "don't know SORT '#{arg}' argument"}
+
+          when 'SEARCH'
+            searchTerm = arg
+            searchResults = wiki.neighborhoodObject.search(searchTerm)
+
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
@@ -59,7 +92,17 @@ bind = ($item, item) ->
     if errors
       $item.append listing
       return
-    $item.append "<h2>Activity Since #{(new Date(since)).toDateString()}</h2>" if since
+
+    header = ""
+    header += "<br/>searching for \"#{escape searchTerm}\"" if searchTerm
+    header += "<br/>since #{(new Date(since)).toDateString()}" if since
+    header += "<br/>more than #{twins} twins" if twins > 0
+    header += "<br/>sorted by page title" if sortOrder is "title"
+    header += "<br/>excluding neighborhood" if includeNeighbors is false
+
+    if header
+      $item.append "<p><b>Page Activity #{header}</b></p>"
+
     now = (new Date).getTime();
     sections = [
       {date: now-1000*60*60*24*365, period: 'Years'}
@@ -72,35 +115,48 @@ bind = ($item, item) ->
       {date: now-1000, period: 'a Minute'}
       {date: now, period: 'Seconds'}
     ]
-    bigger = now
+    if sortOrder == "title"
+      bigger = ''
+    else
+      bigger = now
     for sites in pages
-      smaller = sites[0].page.date
-      for section in sections
-        if section.date > smaller and section.date < bigger
+      if (sites.length >= twins) || twins == 0
+        if sortOrder == "title"
+          smaller = sites[0].page.title.substr(0,1).toLowerCase()
+          if smaller != bigger
+            $item.append """
+              <b>#{smaller}</b><br>
+            """
+        else
+          smaller = sites[0].page.date
+          for section in sections
+            if section.date > smaller and section.date < bigger
+              $item.append """
+                <h3> Within #{section.period} </h3>
+              """
+              break
+        bigger = smaller
+        for each, i in sites
+          joint = if sites[i+1]?.page.date == each.page.date then "" else "&nbsp"
           $item.append """
-            <h3> Within #{section.period} </h3>
+            <img class="remote"
+              title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
+              src="http://#{each.site}/favicon.png"
+              data-site="#{each.site}"
+              data-slug="#{each.page.slug}">#{joint}
           """
-          break
-      bigger = smaller
-      for each, i in sites
-        joint = if sites[i+1]?.page.date == each.page.date then "" else "&nbsp"
+        context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
         $item.append """
-          <img class="remote"
-            title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
-            src="http://#{each.site}/favicon.png"
-            data-site="#{each.site}"
-            data-slug="#{each.page.slug}">#{joint}
+          <a class="internal"
+            href="/#{sites[0].page.slug}"
+            data-page-name="#{sites[0].page.slug}"
+            title="#{context}">
+            #{escape(sites[0].page.title || sites[0].page.slug)}
+          </a><br>
         """
-      context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
-      $item.append """
-        <a class="internal"
-          href="/#{sites[0].page.slug}"
-          data-page-name="#{sites[0].page.slug}"
-          title="#{context}">
-          #{escape(sites[0].page.title || sites[0].page.slug)}
-        </a><br>
-      """
-    $item.append "<p><i>#{omitted} more older titles</i></p>" if omitted > 0
+      else
+        omitted++
+    $item.append "<p><i>#{omitted} more titles</i></p>" if omitted > 0
 
   parse item.text || ''
 
@@ -110,26 +166,43 @@ bind = ($item, item) ->
     pages = {}
     for site, map of neighborhood
       continue if map.sitemapRequestInflight or !(map.sitemap?)
-      for each in map.sitemap
-        sites = pages[each.slug]
-        pages[each.slug] = sites = [] unless sites?
-        sites.push {site: site, page: each}
+      if includeNeighbors or (!includeNeighbors and site == location.host)
+        for each in map.sitemap
+          sites = pages[each.slug]
+          pages[each.slug] = sites = [] unless sites?
+          sites.push {site: site, page: each}
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
+      if sortOrder == "title"
+        a[0].page.title.localeCompare(b[0].page.title,{sensitivity: "accent"})
+      else
         (b[0].page.date || 0) - (a[0].page.date || 0)
 
     omitted = 0
     pages.filter (e) ->
-      omitted += 1 if e[0].page.date <= since
-      e[0].page.date > since
+
+      willInclude = true
+      if since
+        if e[0].page.date <= since
+          willInclude = false
+          omitted++
+      if searchTerm && willInclude
+
+        if !(e[0].page in (finds.page for finds in searchResults.finds))
+          willInclude = false
+          omitted++
+
+      return willInclude
 
 
   display merge wiki.neighborhood
 
   $('body').on 'new-neighbor-done', (e, site) ->
+    if searchTerm
+      searchResults = wiki.neighborhoodObject.search(searchTerm)
     display merge wiki.neighborhood
 
   $item.dblclick -> wiki.textEditor $item, item
