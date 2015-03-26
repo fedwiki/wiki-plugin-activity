@@ -211,4 +211,4 @@ bind = ($item, item) ->
 
 
 window.plugins.activity = {emit, bind} if window?
-module.exports = {} if module?
+module.exports = {escape} if module?
