@@ -13,92 +13,96 @@ escape = (line) ->
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
 
+setDefaults = (query) ->
+  query.since = 0
+  query.listing = []
+  query.errors = 0
+  query.includeNeighbors = true
+  query.twins = 0
+  query.sortOrder = "date"
+  query.searchTerm = ''
+  query.searchResults = ''
+
+parse = (query, text) ->
+  query.listing = []
+  query.errors = 0
+  for line in text.split /\r?\n/
+    continue unless words = line.match /\S+/g
+    # switch words[0]
+    #   when 'SINCE' then since = +(words[1] || 1)
+    html = escape line
+    today = new Date
+    todayStart = today.setHours(0,0,0,0)
+    try
+      [match, op, arg] = line.match(/^\s*(\w*)\s*(.*)$/)
+      switch op
+        when '' then
+        when 'SINCE'
+          if match = arg.match /^(\d+) hours?$/i
+            query.since = Date.now() - ((+match[1])*1000*60*60)
+          else if match = arg.match /^(\d+) days?$/i
+            query.since = Date.now() - ((+match[1])*1000*60*60*24)
+          else if match = arg.match /^(\d+) weeks?$/i
+            query.since = Date.now() - ((+match[1])*1000*60*60*24*7)
+          else if match = arg.match /^(sun|mon|tue|wed|thu|fri|sat)[a-z]*$/i
+            days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
+            query.since = todayStart - ((((new Date).getDay() + 7 - (days.indexOf(match[1].toLowerCase())))%7) * 1000*60*60*24)
+          else if !(isNaN(Date.parse(arg)))
+            query.since = Date.parse(arg)
+          else
+            throw {message:"don't know SINCE '#{arg}' argument"}
+
+        when 'NEIGHBORHOOD'
+          if arg.match /^yes/i
+            query.includeNeighbors = true
+          else if arg.match /^no/i
+            query.includeNeighbors = false
+          else
+            throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
+
+        when 'TWINS'
+          if match = arg.match /^(\d+)/
+            query.twins = +match[1]
+          else
+            throw {message:"don't know TWINS '#{arg}' argument"}
+
+        when 'SORT'
+          if arg.match /^titles?$/i
+            query.sortOrder = "title"
+          else if arg.match /^date/i
+            query.sortOrder = "date"
+          else
+            throw {message: "don't know SORT '#{arg}' argument"}
+
+        when 'SEARCH'
+          query.searchTerm = arg
+          query.searchResults = wiki.neighborhoodObject.search(query.searchTerm)
+
+        else throw {message:"don't know '#{op}' command"}
+    catch err
+      query.errors++
+      html = """<span style="background-color:#fdd;width:100%;" title="#{err.message}">#{html}</span>"""
+    listing.push html
+
+
 emit = ($item, item) ->
 
 bind = ($item, item) ->
 
-  since = 0
-  listing = []
-  errors = 0
-  includeNeighbors = true
-  twins = 0
-  sortOrder = "date"
-  searchTerm = ''
-  searchResults = ''
 
-  parse = (text) ->
-    listing = []
-    errors = 0
-    for line in text.split /\r?\n/
-      continue unless words = line.match /\S+/g
-      # switch words[0]
-      #   when 'SINCE' then since = +(words[1] || 1)
-      html = escape line
-      today = new Date
-      todayStart = today.setHours(0,0,0,0)
-      try
-        [match, op, arg] = line.match(/^\s*(\w*)\s*(.*)$/)
-        switch op
-          when '' then
-          when 'SINCE'
-            if match = arg.match /^(\d+) hours?$/i
-              since = Date.now() - ((+match[1])*1000*60*60)
-            else if match = arg.match /^(\d+) days?$/i
-              since = Date.now() - ((+match[1])*1000*60*60*24)
-            else if match = arg.match /^(\d+) weeks?$/i
-              since = Date.now() - ((+match[1])*1000*60*60*24*7)
-            else if match = arg.match /^(sun|mon|tue|wed|thu|fri|sat)[a-z]*$/i
-              days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
-              since = todayStart - ((((new Date).getDay() + 7 - (days.indexOf(match[1].toLowerCase())))%7) * 1000*60*60*24)
-            else if !(isNaN(Date.parse(arg)))
-              since = Date.parse(arg)
-            else
-              throw {message:"don't know SINCE '#{arg}' argument"}
 
-          when 'NEIGHBORHOOD'
-            if arg.match /^yes/i
-              includeNeighbors = true
-            else if arg.match /^no/i
-              includeNeighbors = false
-            else
-              throw {message:"don't know NEIGHBORHOOD '#{arg}' argument"}
-
-          when 'TWINS'
-            if match = arg.match /^(\d+)/
-              twins = +match[1]
-            else
-              throw {message:"don't know TWINS '#{arg}' argument"}
-
-          when 'SORT'
-            if arg.match /^titles?$/i
-              sortOrder = "title"
-            else if arg.match /^date/i
-              sortOrder = "date"
-            else
-              throw {message: "don't know SORT '#{arg}' argument"}
-
-          when 'SEARCH'
-            searchTerm = arg
-            searchResults = wiki.neighborhoodObject.search(searchTerm)
-
-          else throw {message:"don't know '#{op}' command"}
-      catch err
-        errors++
-        html = """<span style="background-color:#fdd;width:100%;" title="#{err.message}">#{html}</span>"""
-      listing.push html
-
-  display = (pages) ->
+  display = (query, pages) ->
     $item.empty()
-    if errors
-      $item.append listing
+    if query.errors
+      $item.append query.listing
       return
 
     header = ""
-    header += "<br/>searching for \"#{escape searchTerm}\"" if searchTerm
-    header += "<br/>since #{(new Date(since)).toDateString()}" if since
-    header += "<br/>more than #{twins} twins" if twins > 0
-    header += "<br/>sorted by page title" if sortOrder is "title"
-    header += "<br/>excluding neighborhood" if includeNeighbors is false
+    header += "<br/>searching for \"#{escape query.searchTerm}\"" if query.searchTerm
+    header += "<br/>since #{(new Date(query.since)).toDateString()}" if query.since
+    header += "<br/>more than #{query.twins} twins" if query.twins > 0
+    header += "<br/>sorted by page title" if query.sortOrder is "title"
+    header += "<br/>excluding neighborhood" if query.includeNeighbors is false
 
     if header
       $item.append "<p><b>Page Activity #{header}</b></p>"
@@ -115,12 +119,12 @@ bind = ($item, item) ->
       {date: now-1000, period: 'a Minute'}
       {date: now, period: 'Seconds'}
     ]
-    if sortOrder == "title"
+    if query.sortOrder == "title"
       bigger = ''
     else
       bigger = now
     for sites in pages
-      if (sites.length >= twins) || twins == 0
+      if (sites.length >= query.twins) || query.twins == 0
         if sortOrder == "title"
           smaller = sites[0].page.title.substr(0,1).toUpperCase()
           if smaller != bigger
@@ -162,11 +166,11 @@ bind = ($item, item) ->
 
   omitted = 0
 
-  merge = (neighborhood) ->
+  merge = (query, neighborhood) ->
     pages = {}
     for site, map of neighborhood
       continue if map.sitemapRequestInflight or !(map.sitemap?)
-      if includeNeighbors or (!includeNeighbors and site == location.host)
+      if query.includeNeighbors or (!query.includeNeighbors and site == location.host)
         for each in map.sitemap
           sites = pages[each.slug]
           pages[each.slug] = sites = [] unless sites?
@@ -176,7 +180,7 @@ bind = ($item, item) ->
         (b.page.date || 0) - (a.page.date || 0)
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
-      if sortOrder == "title"
+      if query.sortOrder == "title"
         a[0].page.title.localeCompare(b[0].page.title,{sensitivity: "accent"})
       else
         (b[0].page.date || 0) - (a[0].page.date || 0)
@@ -186,24 +190,25 @@ bind = ($item, item) ->
 
       willInclude = true
       if since
-        if e[0].page.date <= since
+        if e[0].page.date <= query.since
           willInclude = false
           omitted++
-      if searchTerm && willInclude
+      if query.searchTerm && willInclude
 
-        if !(e[0].page in (finds.page for finds in searchResults.finds))
+        if !(e[0].page in (finds.page for finds in query.searchResults.finds))
           willInclude = false
           omitted++
 
       return willInclude
 
-
-  display merge wiki.neighborhood
+  query = {}
+  setDefaults query
+  display query, merge query, wiki.neighborhood
 
   $('body').on 'new-neighbor-done', (e, site) ->
     if searchTerm
       searchResults = wiki.neighborhoodObject.search(searchTerm)
-    display merge wiki.neighborhood
+    display query, merge query, wiki.neighborhood
 
   $item.dblclick ->
     $('body').off 'new-neighbor-done'
