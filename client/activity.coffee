@@ -17,6 +17,7 @@ emit = ($item, item) ->
 
 bind = ($item, item) ->
 
+# defaults
   since = 0
   listing = []
   errors = 0
@@ -25,6 +26,7 @@ bind = ($item, item) ->
   sortOrder = "date"
   searchTerm = ''
   searchResults = ''
+  mine = "yes"
 
   parse = (text) ->
     listing = []
@@ -81,6 +83,16 @@ bind = ($item, item) ->
             searchTerm = arg
             searchResults = wiki.neighborhoodObject.search(searchTerm)
 
+          when 'MINE'
+            if arg.match /^yes/i
+              mine = "yes"
+            else if arg.match /^no/i
+              mine = "no"
+            else if arg.match /^only/i
+              mine = "only"
+            else
+              throw {message: "don't know MINE '#{arg}' argument"}
+
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
@@ -94,11 +106,14 @@ bind = ($item, item) ->
       return
 
     header = ""
-    header += "<br/>searching for \"#{escape searchTerm}\"" if searchTerm
-    header += "<br/>since #{(new Date(since)).toDateString()}" if since
-    header += "<br/>more than #{twins} twins" if twins > 0
-    header += "<br/>sorted by page title" if sortOrder is "title"
-    header += "<br/>excluding neighborhood" if includeNeighbors is false
+    header += "<br>searching for \"#{escape searchTerm}\"" if searchTerm
+    header += "<br>since #{(new Date(since)).toDateString()}" if since
+    header += "<br>more than #{twins} twins" if twins > 0
+    header += "<br>sorted by page title" if sortOrder is "title"
+    header += "<br>excluding neighborhood" if includeNeighbors is false
+    header += "<br>excluding my pages" if mine is 'no'
+    header += "<br>including only pages I have a twin of" if mine is 'only'
+    header += "<br>including only pages I don't have a twin of" if mine is 'exclude'
 
     if header
       $item.append "<p><b>Page Activity #{header}</b></p>"
@@ -120,7 +135,11 @@ bind = ($item, item) ->
     else
       bigger = now
     for sites in pages
-      if (sites.length >= twins) || twins == 0
+
+# mine is 'only' and (location.host in (twin.site for twin in sites))
+
+
+      if ((sites.length >= twins) or twins == 0) and (mine is 'only' and (location.host in (twin.site for twin in sites)) or !(mine is 'only')) and (mine is 'exclude' and !(location.host in (twin.site for twin in sites)) or !(mine is 'exclude'))
         if sortOrder == "title"
           smaller = sites[0].page.title.substr(0,1).toUpperCase()
           if smaller != bigger
@@ -166,11 +185,12 @@ bind = ($item, item) ->
     pages = {}
     for site, map of neighborhood
       continue if map.sitemapRequestInflight or !(map.sitemap?)
-      if includeNeighbors or (!includeNeighbors and site == location.host)
-        for each in map.sitemap
-          sites = pages[each.slug]
-          pages[each.slug] = sites = [] unless sites?
-          sites.push {site: site, page: each}
+      if includeNeighbors or (!includeNeighbors and site is location.host)
+        if !(mine is "no" and site is location.host)
+          for each in map.sitemap
+            sites = pages[each.slug]
+            pages[each.slug] = sites = [] unless sites?
+            sites.push {site: site, page: each}
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
