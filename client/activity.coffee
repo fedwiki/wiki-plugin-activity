@@ -155,24 +155,32 @@ bind = ($item, item) ->
               """
               break
         bigger = smaller
-        for each, i in sites
-          joint = if sites[i+1]?.page.date == each.page.date then "" else "&nbsp"
-          $item.append """
-            <img class="remote"
-              title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
-              src="http://#{each.site}/favicon.png"
-              data-site="#{each.site}"
-              data-slug="#{each.page.slug}">#{joint}
-          """
+
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
         $item.append """
+          <div style="float:left;">
           <a class="internal"
             href="/#{sites[0].page.slug}"
             data-page-name="#{sites[0].page.slug}"
             title="#{context}">
             #{escape(sites[0].page.title || sites[0].page.slug)}
-          </a><br>
+          </a></div>
         """
+
+        flags = ''
+
+        for each, i in sites
+          joint = if sites[i-1]?.page.date == each.page.date then "" else "&nbsp;"
+          flags += """
+            #{joint}<img class="remote"
+              title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
+              src="http://#{each.site}/favicon.png"
+              data-site="#{each.site}"
+              data-slug="#{each.page.slug}">
+          """
+
+        $item.append "<div style='text-align: right;'>#{flags}</div>"
+
       else
         omitted++
     $item.append "<p><i>#{omitted} more titles</i></p>" if omitted > 0
