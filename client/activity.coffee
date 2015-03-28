@@ -90,6 +90,8 @@ bind = ($item, item) ->
               mine = "no"
             else if arg.match /^only/i
               mine = "only"
+            else if arg.match /^exclude/i
+              mine = "exclude"
             else
               throw {message: "don't know MINE '#{arg}' argument"}
 
