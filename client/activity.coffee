@@ -82,7 +82,7 @@ parse = (query, text) ->
     catch err
       query.errors++
       html = """<span style="background-color:#fdd;width:100%;" title="#{err.message}">#{html}</span>"""
-    listing.push html
+    query.listing.push html
 
 
 emit = ($item, item) ->
@@ -94,7 +94,7 @@ bind = ($item, item) ->
   display = (query, pages) ->
     $item.empty()
     if query.errors
-      $item.append query.listing
+      $item.append query.listing.join('<br>')
       return
 
     header = ""
@@ -125,7 +125,7 @@ bind = ($item, item) ->
       bigger = now
     for sites in pages
       if (sites.length >= query.twins) || query.twins == 0
-        if sortOrder == "title"
+        if query.sortOrder == "title"
           smaller = sites[0].page.title.substr(0,1).toUpperCase()
           if smaller != bigger
             $item.append """
@@ -162,10 +162,6 @@ bind = ($item, item) ->
         omitted++
     $item.append "<p><i>#{omitted} more titles</i></p>" if omitted > 0
 
-  parse item.text || ''
-
-  omitted = 0
-
   merge = (query, neighborhood) ->
     pages = {}
     for site, map of neighborhood
@@ -189,7 +185,7 @@ bind = ($item, item) ->
     pages.filter (e) ->
 
       willInclude = true
-      if since
+      if query.since
         if e[0].page.date <= query.since
           willInclude = false
           omitted++
@@ -203,12 +199,16 @@ bind = ($item, item) ->
 
   query = {}
   setDefaults query
-  display query, merge query, wiki.neighborhood
+  parse query, item.text || ''
+
+  omitted = 0
+  display query, merge(query, wiki.neighborhood)
 
   $('body').on 'new-neighbor-done', (e, site) ->
-    if searchTerm
-      searchResults = wiki.neighborhoodObject.search(searchTerm)
-    display query, merge query, wiki.neighborhood
+    if query.searchTerm
+      query.searchResults = wiki.neighborhoodObject.search(query.searchTerm)
+    omitted = 0
+    display query, merge(query, wiki.neighborhood)
 
   $item.dblclick ->
     $('body').off 'new-neighbor-done'
@@ -216,4 +216,4 @@ bind = ($item, item) ->
 
 
 window.plugins.activity = {emit, bind} if window?
-module.exports = {escape} if module?
+module.exports = {escape, parse} if module?
