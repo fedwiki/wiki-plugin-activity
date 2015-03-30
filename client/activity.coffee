@@ -27,6 +27,8 @@ bind = ($item, item) ->
   searchTerm = ''
   searchResults = ''
   mine = "yes"
+  conversation = false
+  narrative = false
 
   parse = (text) ->
     listing = []
@@ -95,6 +97,12 @@ bind = ($item, item) ->
             else
               throw {message: "don't know MINE '#{arg}' argument"}
 
+          when 'CONVERSATION'
+            conversation = true
+
+          when 'NARRATIVE'
+            narrative = true
+
           else throw {message:"don't know '#{op}' command"}
       catch err
         errors++
@@ -159,15 +167,48 @@ bind = ($item, item) ->
         bigger = smaller
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
-        $item.append """
-          <div style="float:left;">
+        links = """
           <a class="internal"
             href="/#{sites[0].page.slug}"
             data-page-name="#{sites[0].page.slug}"
             title="#{context}">
             #{escape(sites[0].page.title || sites[0].page.slug)}
-          </a></div>
+          </a>
         """
+
+        if narrative
+          narrativeLink = "#{sites[0].page.slug}"
+          for each, i in sites
+            narrativeLink += "@#{each.site}"
+          links += """
+            &nbsp;&ndash;
+              <a href="/narrative/\##{narrativeLink}"
+                title="Narrative Chart"
+                target="narrative">
+                ※
+              </a>
+          """
+
+        if conversation
+          conversationLink = ''
+          for each, i in sites
+            conversationLink += "/#{each.site}/#{each.page.slug}"
+          if narrative
+            conversationSeparator = ''
+          else
+            conversationSeparator = '&nbsp;&ndash;'
+          links += """
+            #{conversationSeparator}
+              <a href="#{conversationLink}"
+                title="Conversation"
+                target="conversation">
+                ◊
+              </a>
+          """
+
+        $item.append "<div style='float:left'> #{links} </div>"
+
+
 
         flags = ''
 
