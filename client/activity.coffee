@@ -36,7 +36,6 @@ bind = ($item, item) ->
     while tuples.length
       site = tuples.shift()
       slug = tuples.shift()
-      console.log {slug,site,this_page}
       wiki.doInternalLink slug, this_page, site
       this_page = null
 
