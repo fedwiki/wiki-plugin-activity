@@ -30,6 +30,16 @@ bind = ($item, item) ->
   conversation = false
   narrative = false
 
+  open_conversation = (this_page, uri) ->
+    tuples = uri.split '/'
+    tuples.shift()
+    while tuples.length
+      site = tuples.shift()
+      slug = tuples.shift()
+      console.log {slug,site,this_page}
+      wiki.doInternalLink slug, this_page, site
+      this_page = null
+
   parse = (text) ->
     listing = []
     errors = 0
@@ -199,7 +209,8 @@ bind = ($item, item) ->
             conversationSeparator = '&nbsp;&ndash;'
           links += """
             #{conversationSeparator}
-              <a href="#{conversationLink}"
+              <a class="conversation"
+                href="#{conversationLink}"
                 title="Conversation"
                 target="conversation">
                 ◊
@@ -227,6 +238,12 @@ bind = ($item, item) ->
       else
         omitted++
     $item.append "<p><i>#{omitted} more titles</i></p>" if omitted > 0
+
+    $item.find('.conversation').click (e) ->
+      e.stopPropagation()
+      e.preventDefault()
+      this_page = $item.parents('.page') unless e.shiftKey
+      open_conversation this_page, $(this).attr('href')
 
   parse item.text || ''
 
