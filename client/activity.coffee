@@ -260,7 +260,7 @@ bind = ($item, item) ->
             sites.push {site: site, page: each}
     for slug, sites of pages
       sites.sort (a, b) ->
-        (b.page.date || 0) - (a.page.date || 0)
+        (a.page.date || 0) - (b.page.date || 0)
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
       if sortOrder == "title"
