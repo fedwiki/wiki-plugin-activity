@@ -26,6 +26,7 @@ bind = ($item, item) ->
   sortOrder = "date"
   searchTerm = ''
   searchResults = ''
+  rosterResults = {}
   mine = "yes"
   conversation = false
   narrative = false
@@ -93,6 +94,19 @@ bind = ($item, item) ->
           when 'SEARCH'
             searchTerm = arg
             searchResults = wiki.neighborhoodObject.search(searchTerm)
+
+          when 'ROSTER'
+            includeNeighbors = false
+            items = $(".item:lt(#{$('.item').index($item)})")
+            sources = items.filter ".roster-source"
+            sources.each (i,source) ->
+              console.log 'source', source
+              roster = source.getRoster()
+              for key, value of roster
+                if key.toLowerCase().indexOf(arg.toLowerCase()) >= 0
+                  rosterResults[site] = true for site in value
+            console.log line, rosterResults
+
 
           when 'MINE'
             if arg.match /^yes/i
@@ -252,7 +266,7 @@ bind = ($item, item) ->
     pages = {}
     for site, map of neighborhood
       continue if map.sitemapRequestInflight or !(map.sitemap?)
-      if includeNeighbors or (!includeNeighbors and site is location.host)
+      if includeNeighbors or (!includeNeighbors and site is location.host) or site == location.host or rosterResults[site]
         if !(mine is "no" and site is location.host)
           for each in map.sitemap
             sites = pages[each.slug]
