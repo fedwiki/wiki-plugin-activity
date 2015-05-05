@@ -60,7 +60,7 @@ module.exports = function (grunt) {
       });
   });
 
-  grunt.registerTask('build', ['coffee']);
+  grunt.registerTask('build', ['coffee', 'mochaTest']);
   grunt.registerTask('default', ['build']);
 
 };
