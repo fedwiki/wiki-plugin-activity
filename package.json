@@ -31,7 +31,10 @@
     "grunt": "0.4",
     "grunt-contrib-coffee": "0.12",
     "grunt-contrib-watch": "0.6",
-    "grunt-git-authors": "~2"
+    "grunt-git-authors": "~2",
+    "mocha": "*",
+    "expect.js": "*",
+    "grunt-mocha-test": "~0.12"
   },
   "licenses": [
     {
