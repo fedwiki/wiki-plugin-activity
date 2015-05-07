@@ -151,7 +151,7 @@ bind = ($item, item) ->
     if header
       $item.append "<p><b>Page Activity #{header}</b></p>"
 
-    now = (new Date).getTime();
+    now = (new Date).getTime()
     sections = [
       {date: now-1000*60*60*24*365, period: 'Years'}
       {date: now-1000*60*60*24*91, period: 'a Year'}
@@ -238,13 +238,13 @@ bind = ($item, item) ->
 
         for each, i in sites
           joint = if sites[i-1]?.page.date == each.page.date then "" else "&nbsp;"
-          flags += """
-            #{joint}<img class="remote"
+          flags = """
+            <img class="remote"
               title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
               src="http://#{each.site}/favicon.png"
               data-site="#{each.site}"
-              data-slug="#{each.page.slug}">
-          """
+              data-slug="#{each.page.slug}">#{joint}
+          """ + flags
 
         $item.append "<div style='text-align: right;'>#{flags}</div>"
 
@@ -270,7 +270,7 @@ bind = ($item, item) ->
             sites.push {site: site, page: each}
     for slug, sites of pages
       sites.sort (a, b) ->
-        (a.page.date || 0) - (b.page.date || 0)
+        (b.page.date || 0) - (a.page.date || 0)
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
       if query.sortOrder == "title"
