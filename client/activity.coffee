@@ -205,7 +205,7 @@ bind = ($item, item) ->
             narrativeLink += "@#{each.site}"
           links += """
             &nbsp;&ndash;
-              <a href="/narrative/\##{narrativeLink}"
+              <a href="http://paul90.github.io/wiki-narrative-chart/\##{narrativeLink}"
                 title="Narrative Chart"
                 target="narrative">
                 ※
