@@ -101,6 +101,9 @@ parse = (query, text, $item, item) ->
             for key, value of roster
               if key.toLowerCase().indexOf(arg.toLowerCase()) >= 0
                 query.rosterResults[site] = true for site in value
+          # load the sitemaps for the sites in the roster
+          for site of query.rosterResults
+            wiki.neighborhoodObject.registerNeighbor site
 
 
         when 'MINE'
