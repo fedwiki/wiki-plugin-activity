@@ -101,6 +101,8 @@ parse = (query, text, $item, item) ->
             for key, value of roster
               if key.toLowerCase().indexOf(arg.toLowerCase()) >= 0
                 query.rosterResults[site] = true for site in value
+          unless query.rosterResults[location.host]
+            query.mine = "no"
           # load the sitemaps for the sites in the roster
           for site of query.rosterResults
             wiki.neighborhoodObject.registerNeighbor site
@@ -171,8 +173,6 @@ bind = ($item, item) ->
     else
       bigger = now
     for sites in pages
-
-# mine is 'only' and (location.host in (twin.site for twin in sites))
 
 
       if ((sites.length >= query.twins) or query.twins == 0) and (query.mine is 'only' and (location.host in (twin.site for twin in sites)) or !(query.mine is 'only')) and (query.mine is 'exclude' and !(location.host in (twin.site for twin in sites)) or !(query.mine is 'exclude'))
