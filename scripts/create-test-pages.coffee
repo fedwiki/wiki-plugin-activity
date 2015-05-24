@@ -5,6 +5,8 @@
 #
 # It expects there to be a server running on 'localhost:3000', which it will
 # use to create these pages.
+#
+# Usage: cd scripts; coffee create-test-pages.coffee
 
 crypto = require 'crypto'
 fs = require 'fs'
