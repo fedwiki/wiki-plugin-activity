@@ -1,0 +1,181 @@
+{
+  "title": "Activity Test Pages",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "e8c6c4fd01d927fb",
+      "text": "A script in the activity plugin creates a collection of test pages. This collection includes both pages with individual commands, and all possible pairs."
+    },
+    {
+      "type": "paragraph",
+      "id": "894a22b0cc2a67ae",
+      "text": "The following rosters can be used to add some sites to the neighborhood. The tests using the ROSTER command use sites in 'Test 1' roster."
+    },
+    {
+      "type": "roster",
+      "id": "f4993e0bbf6012be",
+      "text": "Test 1\n\nforage.ward.fed.wiki.org\njournal.hapgood.net\n\nTest 2\n\nward.fed.wiki.org\nsites.fed.wiki.org"
+    },
+    {
+      "type": "markdown",
+      "id": "6fae745025f0b1ae",
+      "text": "# Single Commands"
+    },
+    {
+      "type": "paragraph",
+      "id": "a7e02929ffb324ff",
+      "text": "[[Activity Test - Single Commands]]"
+    },
+    {
+      "type": "markdown",
+      "id": "c40f1ff50f68f45d",
+      "text": "# Possible Pairs"
+    },
+    {
+      "type": "paragraph",
+      "id": "76d0ed5cf6b2ed44",
+      "text": "[[Activity Test - Possible Pairs]]"
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "Activity Test Pages",
+        "story": []
+      },
+      "date": 1432459173502
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "e8c6c4fd01d927fb"
+      },
+      "id": "e8c6c4fd01d927fb",
+      "type": "add",
+      "date": 1432459178246
+    },
+    {
+      "type": "edit",
+      "id": "e8c6c4fd01d927fb",
+      "item": {
+        "type": "paragraph",
+        "id": "e8c6c4fd01d927fb",
+        "text": "A script in the activity plugin creates a collection of test pages."
+      },
+      "date": 1432459280022
+    },
+    {
+      "type": "edit",
+      "id": "e8c6c4fd01d927fb",
+      "item": {
+        "type": "paragraph",
+        "id": "e8c6c4fd01d927fb",
+        "text": "A script in the activity plugin creates a collection of test pages. This collection includes both pages with individual commands, and all possible pairs."
+      },
+      "date": 1432459421290
+    },
+    {
+      "type": "add",
+      "id": "894a22b0cc2a67ae",
+      "item": {
+        "type": "paragraph",
+        "id": "894a22b0cc2a67ae",
+        "text": "The following rosters can be used to add some sites to the neighborhood. The tests using the ROSTER command use sites in 'Test 1' roster."
+      },
+      "after": "e8c6c4fd01d927fb",
+      "date": 1432459530935
+    },
+    {
+      "type": "add",
+      "item": {
+        "type": "roster",
+        "id": "f4993e0bbf6012be",
+        "text": "Test 1\n\nforage.ward.fed.wiki.org\njournal.hapgood.net\n\nTest 2\n\nward.fed.wiki.org\nsites.fed.wiki.org"
+      },
+      "after": "894a22b0cc2a67ae",
+      "id": "f4993e0bbf6012be",
+      "date": 1432459534851
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "6fae745025f0b1ae"
+      },
+      "id": "6fae745025f0b1ae",
+      "type": "add",
+      "after": "f4993e0bbf6012be",
+      "date": 1432459973135
+    },
+    {
+      "type": "edit",
+      "id": "6fae745025f0b1ae",
+      "item": {
+        "type": "markdown",
+        "id": "6fae745025f0b1ae",
+        "text": "# Single Commands"
+      },
+      "date": 1432459989713
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "a7e02929ffb324ff"
+      },
+      "id": "a7e02929ffb324ff",
+      "type": "add",
+      "after": "6fae745025f0b1ae",
+      "date": 1432459997477
+    },
+    {
+      "type": "edit",
+      "id": "a7e02929ffb324ff",
+      "item": {
+        "type": "paragraph",
+        "id": "a7e02929ffb324ff",
+        "text": "[[Activity Test - Single Commands]]"
+      },
+      "date": 1432460004270
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "c40f1ff50f68f45d"
+      },
+      "id": "c40f1ff50f68f45d",
+      "type": "add",
+      "after": "a7e02929ffb324ff",
+      "date": 1432460084968
+    },
+    {
+      "type": "edit",
+      "id": "c40f1ff50f68f45d",
+      "item": {
+        "type": "markdown",
+        "id": "c40f1ff50f68f45d",
+        "text": "# Possible Pairs"
+      },
+      "date": 1432460098500
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "76d0ed5cf6b2ed44"
+      },
+      "id": "76d0ed5cf6b2ed44",
+      "type": "add",
+      "after": "c40f1ff50f68f45d",
+      "date": 1432460165372
+    },
+    {
+      "type": "edit",
+      "id": "76d0ed5cf6b2ed44",
+      "item": {
+        "type": "paragraph",
+        "id": "76d0ed5cf6b2ed44",
+        "text": "[[Activity Test - Possible Pairs]]"
+      },
+      "date": 1432460170389
+    }
+  ]
+}
