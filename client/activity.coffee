@@ -286,7 +286,8 @@ bind = ($item, item) ->
 
       willInclude = true
       if query.since
-        if e[0].page.date <= query.since
+        console.log "Date: ", e[0].page.date
+        if e[0].page.date <= query.since or e[0].page.date is undefined
           willInclude = false
           omitted++
       if query.searchTerm && willInclude
