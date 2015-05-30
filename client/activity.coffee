@@ -193,7 +193,7 @@ bind = ($item, item) ->
         bigger = smaller
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
-        links = """
+        pageLink = """
           <a class="internal"
             href="/#{sites[0].page.slug}"
             data-page-name="#{sites[0].page.slug}"
@@ -202,17 +202,21 @@ bind = ($item, item) ->
           </a>
         """
 
+        links = ''
+
         if query.narrative
           narrativeLink = "#{sites[0].page.slug}"
           for each, i in sites
             narrativeLink += "@#{each.site}"
+          if query.conversation
+            style = "vertical-align: baseline; position: relative; top: -0.4em;"
+          else
+            style = ""
           links += """
-            &nbsp;&ndash;
               <a href="http://paul90.github.io/wiki-narrative-chart/\##{narrativeLink}"
                 title="Narrative Chart"
-                target="narrative">
-                ※
-              </a>
+                target="narrative"
+                style="#{style}">※</a>
           """
 
         if query.conversation
@@ -220,22 +224,16 @@ bind = ($item, item) ->
           for each, i in sites
             conversationLink += "/#{each.site}/#{each.page.slug}"
           if query.narrative
-            conversationSeparator = ''
+            style = "margin-left: -0.5em; vertical-align: baseline; position: relative; top: 0.2em;"
           else
-            conversationSeparator = '&nbsp;&ndash;'
+            style = ""
           links += """
-            #{conversationSeparator}
               <a class="conversation"
                 href="#{conversationLink}"
                 title="Conversation"
-                target="conversation">
-                ◊
-              </a>
+                target="conversation"
+                style="#{style}">»</a>
           """
-
-        $item.append "<div style='float:left'> #{links} </div>"
-
-
 
         flags = ''
 
@@ -249,7 +247,14 @@ bind = ($item, item) ->
               data-slug="#{each.page.slug}">#{joint}
           """ + flags
 
-        $item.append "<div style='text-align: right;'>#{flags}</div>"
+        $item.append """
+          <div>
+            <div style='float:left'>#{pageLink}</div>
+            <div style='text-align: right;'>#{flags}
+              <div style="float: right; margin-right: -1em; text-align: left;">#{links}</div>
+            </div>
+          </div>
+        """
 
       else
         omitted++
