@@ -1,0 +1,745 @@
+{
+  "title": "About Activity Configuration",
+  "story": [
+    {
+      "type": "paragraph",
+      "id": "b12a1c004eb9cc0e",
+      "text": "The Activity plugin markup controls what and how changes found in the neighborhood are displayed."
+    },
+    {
+      "type": "paragraph",
+      "id": "94b3b1e67404f72f",
+      "text": "Add an Activity plugin to a page by shift-dragging one of the samples from [[About Activity Plugin]]."
+    },
+    {
+      "type": "paragraph",
+      "id": "dd38a05080c3661a",
+      "text": "Double-click the new plugin to edit its markup. Some samples have empty markup but cannot be saved this way because saving empty markup signals deletion."
+    },
+    {
+      "type": "markdown",
+      "id": "e874f5d04dba55ab",
+      "text": "# Markup"
+    },
+    {
+      "type": "paragraph",
+      "id": "997d7767250c171e",
+      "text": "Any number of configuration commands can be entered one per line with the all-caps keyword left justified."
+    },
+    {
+      "type": "markdown",
+      "id": "f353663799a462e0",
+      "text": "__SINCE__ 8 hours\n__SINCE__ 5 days\n__SINCE__ 3 weeks\n__SINCE__ monday\n\n"
+    },
+    {
+      "type": "paragraph",
+      "id": "3ff0079851d28dd0",
+      "text": "Limit to pages changed since a day or period."
+    },
+    {
+      "type": "markdown",
+      "id": "af4cc41dba19b9af",
+      "text": "__NEIGHBORHOOD__ yes\n__NEIGHBORHOOD__ no"
+    },
+    {
+      "type": "paragraph",
+      "id": "fd22f5769dfe08e9",
+      "text": "Include pages from the neighborhood, default yes."
+    },
+    {
+      "type": "markdown",
+      "id": "b7eb623e574f9b14",
+      "text": "__TWINS__ 3"
+    },
+    {
+      "type": "paragraph",
+      "id": "6f60f6c2cb3c6a7a",
+      "text": "Ignore pages with fewer than a number of twins."
+    },
+    {
+      "type": "markdown",
+      "id": "c491bdee285233f1",
+      "text": "__SORT__ date\n__SORT__ titles"
+    },
+    {
+      "type": "paragraph",
+      "id": "8b80f00ada74e7be",
+      "text": "Sort pages by most recent change, default, or by title."
+    },
+    {
+      "type": "markdown",
+      "id": "2a77c47f36a46b97",
+      "text": "__SEARCH__ text"
+    },
+    {
+      "type": "paragraph",
+      "id": "9b574e838fc850cb",
+      "text": "Include pages found by searching the neighborhood."
+    },
+    {
+      "type": "markdown",
+      "id": "172f00842b6afa0d",
+      "text": "__ROSTER__ all\n__ROSTER__ category"
+    },
+    {
+      "type": "paragraph",
+      "id": "779d4ee6acdc42da",
+      "text": "Include pages found in all neighborhood sites also listed in Rosters, or also those with a Roster category. Examine all Rosters above and to the left in the lineup."
+    },
+    {
+      "type": "markdown",
+      "id": "aaeb40524a5aa42a",
+      "text": "__MINE__ yes\n__MINE__ no\n__MINE__ exclude\n__MINE__ only\n"
+    },
+    {
+      "type": "paragraph",
+      "id": "0933f8652c370907",
+      "text": "Include pages from this origin, yes, default, or no."
+    },
+    {
+      "type": "paragraph",
+      "id": "3cd005492d05aafc",
+      "text": "Exclude twin pages already in this origin, or include only pages this origin and their twins."
+    },
+    {
+      "type": "markdown",
+      "id": "10298510051e9d00",
+      "text": "__CONVERSATION__\n__NARRATIVE__"
+    },
+    {
+      "type": "paragraph",
+      "id": "a6561e861bf2205b",
+      "text": "Add conversation and/or narrative links to each list of pages. Conversation links (») add all neighborhood twins to the lineup. Narrative links (※) open an application that graphs the progression of edits for each twin in the neighborhood."
+    },
+    {
+      "type": "paragraph",
+      "id": "582231e4ef48d486",
+      "text": "Many of these configuration options support specific workflows often in cooperation with plugins on the same or other pages. See [[About Roster Plugin]]."
+    }
+  ],
+  "journal": [
+    {
+      "type": "create",
+      "item": {
+        "title": "About Activity Configuration",
+        "story": []
+      },
+      "date": 1433113052653
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "b12a1c004eb9cc0e"
+      },
+      "id": "b12a1c004eb9cc0e",
+      "type": "add",
+      "date": 1433113066936
+    },
+    {
+      "type": "edit",
+      "id": "b12a1c004eb9cc0e",
+      "item": {
+        "type": "paragraph",
+        "id": "b12a1c004eb9cc0e",
+        "text": "The Activity plugin markup controls what and how changes found in the neighborhood are displayed."
+      },
+      "date": 1433113165012
+    },
+    {
+      "type": "add",
+      "id": "94b3b1e67404f72f",
+      "item": {
+        "type": "paragraph",
+        "id": "94b3b1e67404f72f",
+        "text": "Add an Activity plugin to a page by shift-dragging one of the samples from [[About Activity Plugin]]"
+      },
+      "after": "b12a1c004eb9cc0e",
+      "date": 1433126266014
+    },
+    {
+      "type": "edit",
+      "id": "94b3b1e67404f72f",
+      "item": {
+        "type": "paragraph",
+        "id": "94b3b1e67404f72f",
+        "text": "Add an Activity plugin to a page by shift-dragging one of the samples from [[About Activity Plugin]]."
+      },
+      "date": 1433126305699
+    },
+    {
+      "type": "add",
+      "id": "dd38a05080c3661a",
+      "item": {
+        "type": "paragraph",
+        "id": "dd38a05080c3661a",
+        "text": "Double-click the new plugin to edit its markup. Some samples have empty markup but cannot be saved this way because empty markup signals for a plugin to be deleted."
+      },
+      "after": "94b3b1e67404f72f",
+      "date": 1433126379440
+    },
+    {
+      "type": "edit",
+      "id": "dd38a05080c3661a",
+      "item": {
+        "type": "paragraph",
+        "id": "dd38a05080c3661a",
+        "text": "Double-click the new plugin to edit its markup. Some samples have empty markup but cannot be saved this way because saving empty markup signals deletion."
+      },
+      "date": 1433126401157
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "e874f5d04dba55ab"
+      },
+      "id": "e874f5d04dba55ab",
+      "type": "add",
+      "after": "dd38a05080c3661a",
+      "date": 1433126436122
+    },
+    {
+      "type": "edit",
+      "id": "e874f5d04dba55ab",
+      "item": {
+        "type": "markdown",
+        "id": "e874f5d04dba55ab",
+        "text": "# Markup"
+      },
+      "date": 1433126443689
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "997d7767250c171e"
+      },
+      "id": "997d7767250c171e",
+      "type": "add",
+      "after": "e874f5d04dba55ab",
+      "date": 1433126465318
+    },
+    {
+      "type": "edit",
+      "id": "997d7767250c171e",
+      "item": {
+        "type": "paragraph",
+        "id": "997d7767250c171e",
+        "text": "Any number of configuration commands can be entered one per line with the all-caps keyword left justified."
+      },
+      "date": 1433126550422
+    },
+    {
+      "type": "add",
+      "item": {
+        "type": "markdown",
+        "id": "f353663799a462e0",
+        "text": "__SINCE__ 8 hours\n__SINCE__ 5 days\n__SINCE__ 3 weeks\n__SINCE__ monday\n\n"
+      },
+      "after": "997d7767250c171e",
+      "id": "f353663799a462e0",
+      "date": 1433126587110
+    },
+    {
+      "type": "add",
+      "item": {
+        "type": "paragraph",
+        "id": "3ff0079851d28dd0",
+        "text": "Limit to pages changed since a day or period."
+      },
+      "after": "f353663799a462e0",
+      "id": "3ff0079851d28dd0",
+      "date": 1433126600407
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "af4cc41dba19b9af"
+      },
+      "id": "af4cc41dba19b9af",
+      "type": "add",
+      "after": "3ff0079851d28dd0",
+      "date": 1433126687727
+    },
+    {
+      "type": "edit",
+      "id": "af4cc41dba19b9af",
+      "item": {
+        "type": "markdown",
+        "id": "af4cc41dba19b9af",
+        "text": "__NEIGHBORHOOD__ yes\n__NEIGHBORHOOD__ no"
+      },
+      "date": 1433126728204
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "fd22f5769dfe08e9"
+      },
+      "id": "fd22f5769dfe08e9",
+      "type": "add",
+      "after": "af4cc41dba19b9af",
+      "date": 1433126835478
+    },
+    {
+      "type": "edit",
+      "id": "fd22f5769dfe08e9",
+      "item": {
+        "type": "paragraph",
+        "id": "fd22f5769dfe08e9",
+        "text": "Include pages from the neighborhood, default yes."
+      },
+      "date": 1433126925384
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "b7eb623e574f9b14"
+      },
+      "id": "b7eb623e574f9b14",
+      "type": "add",
+      "after": "fd22f5769dfe08e9",
+      "date": 1433127027596
+    },
+    {
+      "type": "edit",
+      "id": "b7eb623e574f9b14",
+      "item": {
+        "type": "markdown",
+        "id": "b7eb623e574f9b14",
+        "text": "__TWINS__ 3"
+      },
+      "date": 1433127077169
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "6f60f6c2cb3c6a7a"
+      },
+      "id": "6f60f6c2cb3c6a7a",
+      "type": "add",
+      "after": "b7eb623e574f9b14",
+      "date": 1433127080678
+    },
+    {
+      "type": "edit",
+      "id": "6f60f6c2cb3c6a7a",
+      "item": {
+        "type": "paragraph",
+        "id": "6f60f6c2cb3c6a7a",
+        "text": "Ignore pages with fewer than a number of twins."
+      },
+      "date": 1433127119362
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "c491bdee285233f1"
+      },
+      "id": "c491bdee285233f1",
+      "type": "add",
+      "after": "6f60f6c2cb3c6a7a",
+      "date": 1433127146115
+    },
+    {
+      "type": "edit",
+      "id": "c491bdee285233f1",
+      "item": {
+        "type": "markdown",
+        "id": "c491bdee285233f1",
+        "text": "__SORT__ date\n__SORT__ titles"
+      },
+      "date": 1433127169902
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "8b80f00ada74e7be"
+      },
+      "id": "8b80f00ada74e7be",
+      "type": "add",
+      "after": "c491bdee285233f1",
+      "date": 1433127176030
+    },
+    {
+      "type": "edit",
+      "id": "8b80f00ada74e7be",
+      "item": {
+        "type": "paragraph",
+        "id": "8b80f00ada74e7be",
+        "text": "Sort pages by most recent change, default, or alphabetically by title."
+      },
+      "date": 1433127227560
+    },
+    {
+      "type": "edit",
+      "id": "8b80f00ada74e7be",
+      "item": {
+        "type": "paragraph",
+        "id": "8b80f00ada74e7be",
+        "text": "Sort pages by most recent change, default, or by title."
+      },
+      "date": 1433127253112
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "2a77c47f36a46b97"
+      },
+      "id": "2a77c47f36a46b97",
+      "type": "add",
+      "after": "8b80f00ada74e7be",
+      "date": 1433127310591
+    },
+    {
+      "type": "edit",
+      "id": "2a77c47f36a46b97",
+      "item": {
+        "type": "markdown",
+        "id": "2a77c47f36a46b97",
+        "text": "__SEARCH__ word"
+      },
+      "date": 1433127354258
+    },
+    {
+      "type": "edit",
+      "id": "2a77c47f36a46b97",
+      "item": {
+        "type": "markdown",
+        "id": "2a77c47f36a46b97",
+        "text": "__SEARCH__ text"
+      },
+      "date": 1433127419506
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "9b574e838fc850cb"
+      },
+      "id": "9b574e838fc850cb",
+      "type": "add",
+      "after": "2a77c47f36a46b97",
+      "date": 1433127429055
+    },
+    {
+      "type": "edit",
+      "id": "9b574e838fc850cb",
+      "item": {
+        "type": "paragraph",
+        "id": "9b574e838fc850cb",
+        "text": "Include pages found by searching the neighborhood."
+      },
+      "date": 1433127525055
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "172f00842b6afa0d"
+      },
+      "id": "172f00842b6afa0d",
+      "type": "add",
+      "after": "9b574e838fc850cb",
+      "date": 1433127682305
+    },
+    {
+      "type": "edit",
+      "id": "172f00842b6afa0d",
+      "item": {
+        "type": "markdown",
+        "id": "172f00842b6afa0d",
+        "text": "__ROSTER__ text\n__ROSTER__ all"
+      },
+      "date": 1433127729010
+    },
+    {
+      "type": "edit",
+      "id": "172f00842b6afa0d",
+      "item": {
+        "type": "markdown",
+        "id": "172f00842b6afa0d",
+        "text": "__ROSTER__ category\n__ROSTER__ all"
+      },
+      "date": 1433127747811
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "779d4ee6acdc42da"
+      },
+      "id": "779d4ee6acdc42da",
+      "type": "add",
+      "after": "172f00842b6afa0d",
+      "date": 1433127752614
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in sites listed in a Roster, possibly restricted to "
+      },
+      "date": 1433127965829
+    },
+    {
+      "type": "edit",
+      "id": "172f00842b6afa0d",
+      "item": {
+        "type": "markdown",
+        "id": "172f00842b6afa0d",
+        "text": "__ROSTER__ text\n__ROSTER__ all"
+      },
+      "date": 1433127970564
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in sites listed in a Roster, possibly restricted to categories co"
+      },
+      "date": 1433127993341
+    },
+    {
+      "type": "edit",
+      "id": "172f00842b6afa0d",
+      "item": {
+        "type": "markdown",
+        "id": "172f00842b6afa0d",
+        "text": "__ROSTER__ category\n__ROSTER__ all"
+      },
+      "date": 1433127999047
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in sites listed in a Roster, possibly restricted to categories. Examine all Rosters above and to the left in the lineup."
+      },
+      "date": 1433128060213
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "aaeb40524a5aa42a"
+      },
+      "id": "aaeb40524a5aa42a",
+      "type": "add",
+      "after": "779d4ee6acdc42da",
+      "date": 1433128112264
+    },
+    {
+      "type": "edit",
+      "id": "aaeb40524a5aa42a",
+      "item": {
+        "type": "markdown",
+        "id": "aaeb40524a5aa42a",
+        "text": "__MINE__ yes\n__MINE__ no\n__MINE__ exclude\n__MINE__ only\n"
+      },
+      "date": 1433128136862
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "0933f8652c370907"
+      },
+      "id": "0933f8652c370907",
+      "type": "add",
+      "after": "aaeb40524a5aa42a",
+      "date": 1433128573277
+    },
+    {
+      "type": "edit",
+      "id": "0933f8652c370907",
+      "item": {
+        "type": "paragraph",
+        "id": "0933f8652c370907",
+        "text": "Include pages from this origin, yes, default, or no."
+      },
+      "date": 1433128635073
+    },
+    {
+      "type": "add",
+      "id": "3cd005492d05aafc",
+      "item": {
+        "type": "paragraph",
+        "id": "3cd005492d05aafc",
+        "text": "Exclude twin pages already in this origin, or include only pages in this origin for which there are twins."
+      },
+      "after": "0933f8652c370907",
+      "date": 1433129036516
+    },
+    {
+      "type": "edit",
+      "id": "3cd005492d05aafc",
+      "item": {
+        "type": "paragraph",
+        "id": "3cd005492d05aafc",
+        "text": "Exclude twin pages already in this origin, or include only pages this origin and their twins."
+      },
+      "date": 1433129159903
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in all sites listed in a Roster, possibly restricted to categories. Examine all Rosters above and to the left in the lineup."
+      },
+      "date": 1433129204298
+    },
+    {
+      "type": "edit",
+      "id": "172f00842b6afa0d",
+      "item": {
+        "type": "markdown",
+        "id": "172f00842b6afa0d",
+        "text": "__ROSTER__ all\n__ROSTER__ category"
+      },
+      "date": 1433129217735
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in all sites listed in Rosters, or those with a category. Examine all Rosters above and to the left in the lineup."
+      },
+      "date": 1433129287959
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in all neighborhood sites listed in Rosters, or those with a category. Examine all Rosters above and to the left in the lineup."
+      },
+      "date": 1433129416641
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in all neighborhood sites also listed in Rosters, or those with a category. Examine all Rosters above and to the left in the lineup."
+      },
+      "date": 1433129429256
+    },
+    {
+      "type": "edit",
+      "id": "779d4ee6acdc42da",
+      "item": {
+        "type": "paragraph",
+        "id": "779d4ee6acdc42da",
+        "text": "Include pages found in all neighborhood sites also listed in Rosters, or also those with a Roster category. Examine all Rosters above and to the left in the lineup."
+      },
+      "date": 1433129451759
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "10298510051e9d00"
+      },
+      "id": "10298510051e9d00",
+      "type": "add",
+      "after": "3cd005492d05aafc",
+      "date": 1433129566057
+    },
+    {
+      "type": "edit",
+      "id": "10298510051e9d00",
+      "item": {
+        "type": "markdown",
+        "id": "10298510051e9d00",
+        "text": "__CONVERSATION__\n__NARRATIVE__"
+      },
+      "date": 1433129616166
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "a6561e861bf2205b"
+      },
+      "id": "a6561e861bf2205b",
+      "type": "add",
+      "after": "10298510051e9d00",
+      "date": 1433129631708
+    },
+    {
+      "type": "edit",
+      "id": "a6561e861bf2205b",
+      "item": {
+        "type": "paragraph",
+        "id": "a6561e861bf2205b",
+        "text": "Add conversation and/or narrative links to each list of pages. "
+      },
+      "date": 1433129721212
+    },
+    {
+      "type": "edit",
+      "id": "a6561e861bf2205b",
+      "item": {
+        "type": "paragraph",
+        "id": "a6561e861bf2205b",
+        "text": "Add conversation and/or narrative links to each list of pages. Conversation links open "
+      },
+      "date": 1433129779490
+    },
+    {
+      "type": "edit",
+      "id": "a6561e861bf2205b",
+      "item": {
+        "type": "paragraph",
+        "id": "a6561e861bf2205b",
+        "text": "Add conversation and/or narrative links to each list of pages. Conversation links (») add all neighborhood twins to the lineup. Narrative links"
+      },
+      "date": 1433129873169
+    },
+    {
+      "type": "edit",
+      "id": "a6561e861bf2205b",
+      "item": {
+        "type": "paragraph",
+        "id": "a6561e861bf2205b",
+        "text": "Add conversation and/or narrative links to each list of pages. Conversation links (») add all neighborhood twins to the lineup. Narrative links (※) "
+      },
+      "date": 1433129907180
+    },
+    {
+      "type": "edit",
+      "id": "a6561e861bf2205b",
+      "item": {
+        "type": "paragraph",
+        "id": "a6561e861bf2205b",
+        "text": "Add conversation and/or narrative links to each list of pages. Conversation links (») add all neighborhood twins to the lineup. Narrative links (※) open an application that graphs the progression of edits for each twin in the neighborhood."
+      },
+      "date": 1433130141859
+    },
+    {
+      "type": "add",
+      "id": "582231e4ef48d486",
+      "item": {
+        "type": "paragraph",
+        "id": "582231e4ef48d486",
+        "text": "Many of these configuration options support specific workflows often in cooperation with plugins on the same or other pages. See [[About Roster Plugin]]"
+      },
+      "after": "a6561e861bf2205b",
+      "date": 1433130391373
+    },
+    {
+      "type": "edit",
+      "id": "582231e4ef48d486",
+      "item": {
+        "type": "paragraph",
+        "id": "582231e4ef48d486",
+        "text": "Many of these configuration options support specific workflows often in cooperation with plugins on the same or other pages. See [[About Roster Plugin]]."
+      },
+      "date": 1433130440912
+    }
+  ]
+}
