@@ -221,7 +221,7 @@ bind = ($item, item) ->
 
         if query.conversation
           conversationLink = ''
-          for each, i in sites
+          for each, i in sites.slice().reverse()
             conversationLink += "/#{each.site}/#{each.page.slug}"
           if query.narrative
             style = "margin-left: -0.5em; vertical-align: baseline; position: relative; top: 0.2em;"
