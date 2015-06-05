@@ -208,31 +208,22 @@ bind = ($item, item) ->
           narrativeLink = "#{sites[0].page.slug}"
           for each, i in sites
             narrativeLink += "@#{each.site}"
-          if query.conversation
-            style = "vertical-align: baseline; position: relative; top: -0.4em;"
-          else
-            style = ""
           links += """
               <a href="http://paul90.github.io/wiki-narrative-chart/\##{narrativeLink}"
                 title="Narrative Chart"
-                target="narrative"
-                style="#{style}">※</a>
+                target="narrative">※</a>
           """
 
         if query.conversation
           conversationLink = ''
           for each, i in sites.slice().reverse()
             conversationLink += "/#{each.site}/#{each.page.slug}"
-          if query.narrative
-            style = "margin-left: -0.5em; vertical-align: baseline; position: relative; top: 0.2em;"
-          else
-            style = ""
+          links += "&thinsp;" if query.narrative # separate with a narrow space
           links += """
               <a class="conversation"
                 href="#{conversationLink}"
                 title="Conversation"
-                target="conversation"
-                style="#{style}">»</a>
+                target="conversation">»</a>
           """
 
         flags = ''
@@ -248,10 +239,10 @@ bind = ($item, item) ->
           """ + flags
 
         $item.append """
-          <div>
+          <div style='clear: both;'>
             <div style='float:left'>#{pageLink}</div>
             <div style='text-align: right;'>#{flags}
-              <div style="float: right; margin-right: -1em; text-align: left;">#{links}</div>
+              <div style="float: right; margin-right: -1.1em">#{links}</div>
             </div>
           </div>
         """
