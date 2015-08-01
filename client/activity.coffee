@@ -96,7 +96,7 @@ parse = (query, text, $item, item) ->
           items = $(".item:lt(#{$('.item').index($item)})")
           sources = items.filter ".roster-source"
           sources.each (i,source) ->
-            console.log 'source', source
+            # console.log 'source', source
             roster = source.getRoster()
             for key, value of roster
               if key.toLowerCase().indexOf(arg.toLowerCase()) >= 0
@@ -282,7 +282,7 @@ bind = ($item, item) ->
 
       willInclude = true
       if query.since
-        console.log "Date: ", e[0].page.date
+        # console.log "Date: ", e[0].page.date
         if e[0].page.date <= query.since or e[0].page.date is undefined
           willInclude = false
           omitted++
