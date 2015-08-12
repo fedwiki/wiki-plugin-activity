@@ -208,7 +208,7 @@ bind = ($item, item) ->
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
 
-        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", dataPageName: "#{sites[0].page.slug}", title: "#{context}" }, "#{escape(sites[0].page.title || sites[0].page.slug)}"
+        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", title: "#{context}", key: "#{sites[0].page.slug}" ,attributes: {"data-page-name": "#{sites[0].page.slug}"}}, "#{escape(sites[0].page.title || sites[0].page.slug)}"
 
         links = []
 
@@ -259,7 +259,7 @@ bind = ($item, item) ->
           for each in map.sitemap
             sites = pages[each.slug]
             pages[each.slug] = sites = [] unless sites?
-            sites.push {site: site, page: each}
+            sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
