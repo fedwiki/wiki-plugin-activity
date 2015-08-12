@@ -5,7 +5,10 @@
  * https://github.com/fedwiki/wiki-plugin-activity/blob/master/LICENSE.txt
 ###
 
-
+h = require 'virtual-dom/h'
+diff = require 'virtual-dom/diff'
+patch = require 'virtual-dom/patch'
+createElement = require 'virtual-dom/create-element'
 
 escape = (line) ->
   line
@@ -137,24 +140,36 @@ emit = ($item, item) ->
 
 bind = ($item, item) ->
 
+  tree = h 'div'
+  rootNode = createElement tree
+  $item.append rootNode
+
   display = (query, pages) ->
-    $item.empty()
+
+    # Catch query errors
     if query.errors
-      $item.append query.listing.join('<br>')
+      newTree = h 'div', h 'p', query.listing.join('<br>')
+      patches = diff tree, newTree
+      rootNode = patch rootNode, patches
       return
 
-    header = ""
-    header += "<br>searching for \"#{escape query.searchTerm}\"" if query.searchTerm
-    header += "<br>since #{(new Date(query.since)).toDateString()}" if query.since
-    header += "<br>more than #{query.twins} twins" if query.twins > 0
-    header += "<br>sorted by page title" if query.sortOrder is "title"
-    header += "<br>excluding neighborhood" if query.includeNeighbors is false
-    header += "<br>excluding my pages" if query.mine is 'no'
-    header += "<br>including only pages I have a twin of" if query.mine is 'only'
-    header += "<br>including only pages I don't have a twin of" if query.mine is 'exclude'
+    # create content for the plugin's title
 
-    if header
-      $item.append "<p><b>Page Activity #{header}</b></p>"
+    header = []
+
+    subHeadStyle = { style: { marginTop: '0px', marginBottom: '0px', marginLeft: '25px', }}
+
+    header.push h 'p', {style: {marginBottom: '0px'}}, "Page Activity"
+    header.push h 'p', subHeadStyle, "searching for \"#{escape query.searchTerm}\"" if query.searchTerm
+    header.push h 'p', subHeadStyle, "since #{(new Date(query.since)).toDateString()}" if query.since
+    header.push h 'p', subHeadStyle, "more than #{query.twins} twins" if query.twins > 0
+    header.push h 'p', subHeadStyle, "sorted by page title" if query.sortOrder is "title"
+    header.push h 'p', subHeadStyle, "excluding neighborhood" if query.includeNeighbors is false
+    header.push h 'p', subHeadStyle, "excluding my pages" if query.mine is 'no'
+    header.push h 'p', subHeadStyle, "including only pages I have a twin of" if query.mine is 'only'
+    header.push h 'p', subHeadStyle, "including only pages I don't have a twin of" if query.mine is 'exclude'
+
+    activityTitle = h 'div', {style: {fontWeight: 'bold', marginTop: '14px', marginBottom: '14px'}}, header
 
     now = (new Date).getTime()
     sections = [
@@ -168,94 +183,87 @@ bind = ($item, item) ->
       {date: now-1000, period: 'a Minute'}
       {date: now, period: 'Seconds'}
     ]
+
     if query.sortOrder == "title"
       bigger = ''
     else
       bigger = now
-    for sites in pages
 
+    activityBody = []
+
+    for sites in pages
 
       if ((sites.length >= query.twins) or query.twins == 0) and (query.mine is 'only' and (location.host in (twin.site for twin in sites)) or !(query.mine is 'only')) and (query.mine is 'exclude' and !(location.host in (twin.site for twin in sites)) or !(query.mine is 'exclude'))
         if query.sortOrder == "title"
           smaller = sites[0].page.title.substr(0,1).toUpperCase()
           if smaller != bigger
-            $item.append """
-              <div style="width:100%; text-align:right;"><b>#{smaller}</b></span><br>
-            """
+            activityBody.push h('h3', {style: {width: '100%', textAlign: "right"}}, "#{smaller}")
         else
           smaller = sites[0].page.date
           for section in sections
             if section.date > smaller and section.date < bigger
-              $item.append """
-                <h3> Within #{section.period} </h3>
-              """
+              activityBody.push h 'h3', "Within #{section.period}"
               break
         bigger = smaller
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
-        pageLink = """
-          <a class="internal"
-            href="/#{sites[0].page.slug}"
-            data-page-name="#{sites[0].page.slug}"
-            title="#{context}">
-            #{escape(sites[0].page.title || sites[0].page.slug)}
-          </a>
-        """
 
-        links = ''
+        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", dataPageName: "#{sites[0].page.slug}", title: "#{context}" }, "#{escape(sites[0].page.title || sites[0].page.slug)}"
+
+        links = []
 
         if query.narrative
           narrativeLink = "#{sites[0].page.slug}"
           for each, i in sites
             narrativeLink += "@#{each.site}"
-          links += """
-              <a href="http://paul90.github.io/wiki-narrative-chart/\##{narrativeLink}"
-                title="Narrative Chart"
-                target="narrative">※</a>
-          """
+          links.push h 'a', {href: "http://paul90.github.io/wiki-narrative-chart/\##{narrativeLink}", title: "Narrative Chart", target: "narrative"}, "※"
 
         if query.conversation
           conversationLink = ''
           for each, i in sites.slice().reverse()
             conversationLink += "/#{each.site}/#{each.page.slug}"
-          links += "&thinsp;" if query.narrative # separate with a narrow space
-          links += """
-              <a class="conversation"
-                href="#{conversationLink}"
-                title="Conversation"
-                target="conversation">»</a>
-          """
+          #links.push "" if query.narrative # separate with a narrow space
+          links.push h 'a.conversation', {href: "#{conversationLink}", title: "Conversation", target: "conversation"}, "»"
 
-        flags = ''
+        flags = []
 
         for each, i in sites
           joint = if sites[i-1]?.page.date == each.page.date then "" else "&nbsp;"
-          flags = """
-            <img class="remote"
-              title="#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}"
-              src="http://#{each.site}/favicon.png"
-              data-site="#{each.site}"
-              data-slug="#{each.page.slug}">#{joint}
-          """ + flags
+          flags.push h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "http://#{each.site}/favicon.png", dataSite: "#{each.site}", dataSlug: "#{each.page.slug}"})
+          flags.push " " if !(sites[i-1]?.page.date == each.page.date)
 
-        $item.append """
-          <div style='clear: both;'>
-            <div style='float:left'>#{pageLink}</div>
-            <div style='text-align: right;'>#{flags}
-              <div style="float: right; margin-right: -1.1em">#{links}</div>
-            </div>
-          </div>
-        """
+        activityBody.push h 'div', {style: {clear: 'both'}}, [ h('div', {style: {float: 'left'}}, pageLink), h('div', {style: {textAlign: 'right'}}, [flags, h('div', {style: {float: 'right', marginRight: '-1.1em'}}, links)])]
 
       else
         omitted++
-    $item.append "<p><i>#{omitted} more titles</i></p>" if omitted > 0
+    activityBody.push h 'p', h 'i', "#{omitted} more titles" if omitted > 0
 
-    $item.find('.conversation').click (e) ->
-      e.stopPropagation()
-      e.preventDefault()
-      this_page = $item.parents('.page') unless e.shiftKey
-      open_conversation this_page, $(this).attr('href')
+    newTree = h 'div', [activityTitle, activityBody]
+    patches = diff tree, newTree
+    rootNode = patch rootNode, patches
+    tree = newTree
+
+
+#    $item.find('.conversation').click (e) ->
+#      e.stopPropagation()
+#      e.preventDefault()
+#      this_page = $item.parents('.page') unless e.shiftKey
+#      open_conversation this_page, $(this).attr('href')
+
+
+  display_old = (query, pages) ->
+    $item.empty()
+    if query.errors
+      $item.append query.listing.join('<br>')
+      return
+
+
+
+
+
+
+
+
 
   merge = (query, neighborhood) ->
     pages = {}
