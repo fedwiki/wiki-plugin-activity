@@ -243,26 +243,11 @@ bind = ($item, item) ->
     rootNode = patch rootNode, patches
     tree = newTree
 
-
-#    $item.find('.conversation').click (e) ->
-#      e.stopPropagation()
-#      e.preventDefault()
-#      this_page = $item.parents('.page') unless e.shiftKey
-#      open_conversation this_page, $(this).attr('href')
-
-
-  display_old = (query, pages) ->
-    $item.empty()
-    if query.errors
-      $item.append query.listing.join('<br>')
-      return
-
-
-
-
-
-
-
+    $item.find('.conversation').click (e) ->
+      e.stopPropagation()
+      e.preventDefault()
+      this_page = $item.parents('.page') unless e.shiftKey
+      open_conversation this_page, $(this).attr('href')
 
 
   merge = (query, neighborhood) ->
