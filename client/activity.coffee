@@ -144,6 +144,9 @@ bind = ($item, item) ->
   rootNode = createElement tree
   $item.append rootNode
 
+  unfilteredPages = {}
+  pages = {}
+
   display = (query, pages) ->
 
     # Catch query errors
@@ -249,20 +252,22 @@ bind = ($item, item) ->
       this_page = $item.parents('.page') unless e.shiftKey
       open_conversation this_page, $(this).attr('href')
 
+  merge = (query, neighborhoodSites) ->
 
-  merge = (query, neighborhood) ->
-    pages = {}
-    for site, map of neighborhood
+    for site in neighborhoodSites
+
+      map = wiki.neighborhood[site]
       continue if map.sitemapRequestInflight or !(map.sitemap?)
       if query.includeNeighbors or (!query.includeNeighbors and site is location.host) or site == location.host or query.rosterResults[site]
         if !(query.mine is "no" and site is location.host)
           for each in map.sitemap
-            sites = pages[each.slug]
-            pages[each.slug] = sites = [] unless sites?
+            sites = unfilteredPages[each.slug]
+            unfilteredPages[each.slug] = sites = [] unless sites?
             sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
+    pages = unfilteredPages
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
       if query.sortOrder == "title"
@@ -292,13 +297,13 @@ bind = ($item, item) ->
   parse query, item.text || '', $item, item
 
   omitted = 0
-  display query, merge(query, wiki.neighborhood)
+  display query, merge(query, Object.keys(wiki.neighborhood))
 
   $('body').on 'new-neighbor-done', (e, site) ->
     if query.searchTerm
       searchResults = wiki.neighborhoodObject.search(query.searchTerm)
     omitted = 0
-    display query, merge(query, wiki.neighborhood)
+    display query, merge(query, [site])
 
   $item.dblclick ->
     $('body').off 'new-neighbor-done'
