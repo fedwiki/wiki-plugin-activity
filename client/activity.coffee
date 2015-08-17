@@ -200,7 +200,7 @@ bind = ($item, item) ->
         if query.sortOrder == "title"
           smaller = sites[0].page.title.substr(0,1).toUpperCase()
           if smaller != bigger
-            activityBody.push h('h3', {style: {width: '100%', textAlign: "right"}}, "#{smaller}")
+            activityBody.push h('h3', {style: {width: '100%', textAlign: "right"}}, smaller)
         else
           smaller = sites[0].page.date
           for section in sections
@@ -211,12 +211,12 @@ bind = ($item, item) ->
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
 
-        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", title: "#{context}", key: "#{sites[0].page.slug}" ,attributes: {"data-page-name": "#{sites[0].page.slug}"}}, "#{escape(sites[0].page.title || sites[0].page.slug)}"
+        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{escape(sites[0].page.title || sites[0].page.slug)}"
 
         links = []
 
         if query.narrative
-          narrativeLink = "#{sites[0].page.slug}"
+          narrativeLink = sites[0].page.slug
           for each, i in sites
             narrativeLink += "@#{each.site}"
           links.push h 'a', {href: "http://paul90.github.io/wiki-narrative-chart/\##{narrativeLink}", title: "Narrative Chart", target: "narrative"}, "※"
@@ -226,16 +226,16 @@ bind = ($item, item) ->
           for each, i in sites.slice().reverse()
             conversationLink += "/#{each.site}/#{each.page.slug}"
           #links.push "" if query.narrative # separate with a narrow space
-          links.push h 'a.conversation', {href: "#{conversationLink}", title: "Conversation", target: "conversation"}, "»"
+          links.push h 'a.conversation', {href: conversationLink, title: "Conversation", target: "conversation"}, "»"
 
         flags = []
 
         for each, i in sites
           joint = if sites[i-1]?.page.date == each.page.date then "" else "&nbsp;"
-          flags.push h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "http://#{each.site}/favicon.png", dataSite: "#{each.site}", dataSlug: "#{each.page.slug}"})
+          flags.push h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "http://#{each.site}/favicon.png", dataSite: each.site, dataSlug: each.page.slug})
           flags.push " " if !(sites[i-1]?.page.date == each.page.date)
 
-        activityBody.push h 'div', {style: {clear: 'both'}}, [ h('div', {style: {float: 'left'}}, pageLink), h('div', {style: {textAlign: 'right'}}, [flags, h('div', {style: {float: 'right', marginRight: '-1.1em'}}, links)])]
+        activityBody.push h 'div', {style: {clear: 'both'}, id: sites[0].page.slug}, [ h('div', {style: {float: 'left'}}, pageLink), h('div', {style: {textAlign: 'right'}}, [flags, h('div', {style: {float: 'right', marginRight: '-1.1em'}}, links)])]
 
       else
         omitted++
