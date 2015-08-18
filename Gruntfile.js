@@ -1,7 +1,8 @@
 module.exports = function (grunt) {
-  grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-git-authors');
 
   grunt.initConfig({
@@ -14,23 +15,29 @@ module.exports = function (grunt) {
       ]
     },
 
-    coffee: {
-      client: {
-        expand: true,
+    // tidy-up before we start the build
+    clean: ['client/activity.js', 'client/activity.js.map', 'test/test.js', 'test/test.js.map'],
+
+    browserify: {
+      plugin: {
+        src: ['client/activity.coffee'],
+        dest: 'client/activity.js',
         options: {
-          sourceMap: true
-        },
-        src: ['client/*.coffee', 'test/*.coffee'],
-        ext: '.js'
+          transform: ['coffeeify'],
+          browserifyOptions: {
+            extentions: ".coffee"
+          }
+        }
       }
     },
 
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec'
+          reporter: 'spec',
+          require: 'coffee-script/register'
         },
-        src: ['test/**/*.js']
+        src: ['test/test.coffee']
       }
     },
 
@@ -38,12 +45,12 @@ module.exports = function (grunt) {
     watch: {
       all: {
         files: ['client/*.coffee', 'test/*.coffee'],
-        tasks: ['coffee','mochaTest']
+        tasks: ['build']
       }
     }
   });
 
-  grunt.registerTask('build', ['coffee', 'mochaTest']);
+  grunt.registerTask('build', ['clean', 'mochaTest', 'browserify']);
   grunt.registerTask('default', ['build']);
 
 };

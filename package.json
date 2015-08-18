@@ -27,10 +27,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "virtual-dom": "~2"
+  },
   "devDependencies": {
+    "coffee-script": "*",
+    "coffeeify": "*",
     "grunt": "0.4",
-    "grunt-contrib-coffee": "0.13",
+    "grunt-browserify": "~4",
     "grunt-contrib-watch": "0.6",
+    "grunt-contrib-clean": "~0.6",
     "grunt-git-authors": "~3",
     "mocha": "*",
     "expect.js": "*",
