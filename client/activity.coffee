@@ -232,7 +232,7 @@ bind = ($item, item) ->
 
         for each, i in sites
           joint = if sites[i-1]?.page.date == each.page.date then "" else "&nbsp;"
-          flags.push h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "http://#{each.site}/favicon.png", dataSite: each.site, dataSlug: each.page.slug})
+          flags.push h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "http://#{each.site}/favicon.png", attributes:  {"data-site": each.site, "data-slug": each.page.slug}})
           flags.push " " if !(sites[i-1]?.page.date == each.page.date)
 
         activityBody.push h 'div', {style: {clear: 'both'}, id: sites[0].page.slug}, [ h('div', {style: {float: 'left'}}, pageLink), h('div', {style: {textAlign: 'right'}}, [flags, h('div', {style: {float: 'right', marginRight: '-1.1em'}}, links)])]
