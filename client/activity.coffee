@@ -163,7 +163,7 @@ bind = ($item, item) ->
     subHeadStyle = { style: { marginTop: '0px', marginBottom: '0px', marginLeft: '25px', }}
 
     header.push h 'p', {style: {marginBottom: '0px'}}, "Page Activity"
-    header.push h 'p', subHeadStyle, "searching for \"#{escape query.searchTerm}\"" if query.searchTerm
+    header.push h 'p', subHeadStyle, "searching for \"#{query.searchTerm}\"" if query.searchTerm
     header.push h 'p', subHeadStyle, "since #{(new Date(query.since)).toDateString()}" if query.since
     header.push h 'p', subHeadStyle, "more than #{query.twins} twins" if query.twins > 0
     header.push h 'p', subHeadStyle, "sorted by page title" if query.sortOrder is "title"
@@ -211,7 +211,7 @@ bind = ($item, item) ->
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
 
-        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{escape(sites[0].page.title || sites[0].page.slug)}"
+        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{sites[0].page.title || sites[0].page.slug}"
 
         links = []
 
