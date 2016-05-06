@@ -9,6 +9,7 @@ h = require 'virtual-dom/h'
 diff = require 'virtual-dom/diff'
 patch = require 'virtual-dom/patch'
 createElement = require 'virtual-dom/create-element'
+_ = require 'lodash'
 
 escape = (line) ->
   line
@@ -264,7 +265,10 @@ bind = ($item, item) ->
           for each in map.sitemap
             sites = unfilteredPages[each.slug]
             unfilteredPages[each.slug] = sites = [] unless sites?
-            sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
+            if _.findIndex(sites, ['site', site]) is -1
+              sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
+            else
+              sites[_.findIndex(sites, ['site', site])] = {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
@@ -301,6 +305,7 @@ bind = ($item, item) ->
   display query, merge(query, Object.keys(wiki.neighborhood))
 
   $('body').on 'new-neighbor-done', (e, site) ->
+    console.log "Pages: ", pages
     if query.searchTerm
       searchResults = wiki.neighborhoodObject.search(query.searchTerm)
     omitted = 0
