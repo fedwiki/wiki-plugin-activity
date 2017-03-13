@@ -1,6 +1,6 @@
 {
   "name": "wiki-plugin-activity",
-  "version": "0.2.9",
+  "version": "0.3.0-0",
   "publishConfig": {
     "tag": "next"
   },
