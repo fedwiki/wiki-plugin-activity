@@ -230,11 +230,13 @@ bind = ($item, item) ->
           links.push h 'a.conversation', {href: conversationLink, title: "Conversation", target: "conversation"}, "»"
 
         flags = []
-
         for each, i in sites
-          joint = if sites[i-1]?.page.date == each.page.date then "" else " "
-          flags.unshift joint
-          flags.unshift h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "#{wiki.site(each.site).flag()}", attributes:  {"data-site": each.site, "data-slug": each.page.slug}})
+          if i<10
+            joint = if sites[i-1]?.page.date == each.page.date then "" else " "
+            flags.unshift joint
+            flags.unshift h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "#{wiki.site(each.site).flag()}", attributes:  {"data-site": each.site, "data-slug": each.page.slug}})
+          else if i == 10
+            flags.unshift ' ⋯ '
 
 
         activityBody.push h 'div', {style: {clear: 'both'}, id: sites[0].page.slug}, [ h('div', {style: {float: 'left'}}, pageLink), h('div', {style: {textAlign: 'right'}}, [flags, h('div', {style: {float: 'right', marginRight: '-1.1em'}}, links)])]
@@ -305,7 +307,7 @@ bind = ($item, item) ->
   display query, merge(query, Object.keys(wiki.neighborhood))
 
   $('body').on 'new-neighbor-done', (e, site) ->
-    console.log "Pages: ", pages
+    # console.log "Pages: ", pages
     if query.searchTerm
       searchResults = wiki.neighborhoodObject.search(query.searchTerm)
     omitted = 0
