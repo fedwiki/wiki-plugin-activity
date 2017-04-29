@@ -161,9 +161,9 @@ bind = ($item, item) ->
 
     header = []
 
-    subHeadStyle = { style: { marginTop: '0px', marginBottom: '0px', marginLeft: '25px', }}
+    subHeadStyle = { style: { marginTop: '0px', marginBottom: '0px' }}
 
-    header.push h 'p', {style: {marginBottom: '0px'}}, "Page Activity"
+    # header.push h 'p', {style: {marginBottom: '0px'}}, "Page Activity"
     header.push h 'p', subHeadStyle, "searching for \"#{query.searchTerm}\"" if query.searchTerm
     header.push h 'p', subHeadStyle, "since #{(new Date(query.since)).toDateString()}" if query.since
     header.push h 'p', subHeadStyle, "more than #{query.twins} twins" if query.twins > 0
@@ -173,7 +173,7 @@ bind = ($item, item) ->
     header.push h 'p', subHeadStyle, "including only pages I have a twin of" if query.mine is 'only'
     header.push h 'p', subHeadStyle, "including only pages I don't have a twin of" if query.mine is 'exclude'
 
-    activityTitle = h 'div', {style: {fontWeight: 'bold', marginTop: '14px', marginBottom: '14px'}}, header
+    activityTitle = h 'div', {style: {textAlign:'center', fontSize: 'small', color:'gray', marginTop: '14px' }}, header
 
     now = (new Date).getTime()
     sections = [
