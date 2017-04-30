@@ -161,9 +161,9 @@ bind = ($item, item) ->
 
     header = []
 
-    subHeadStyle = { style: { marginTop: '0px', marginBottom: '0px', marginLeft: '25px', }}
+    subHeadStyle = { style: { marginTop: '0px', marginBottom: '0px' }}
 
-    header.push h 'p', {style: {marginBottom: '0px'}}, "Page Activity"
+    # header.push h 'p', {style: {marginBottom: '0px'}}, "Page Activity"
     header.push h 'p', subHeadStyle, "searching for \"#{query.searchTerm}\"" if query.searchTerm
     header.push h 'p', subHeadStyle, "since #{(new Date(query.since)).toDateString()}" if query.since
     header.push h 'p', subHeadStyle, "more than #{query.twins} twins" if query.twins > 0
@@ -173,7 +173,7 @@ bind = ($item, item) ->
     header.push h 'p', subHeadStyle, "including only pages I have a twin of" if query.mine is 'only'
     header.push h 'p', subHeadStyle, "including only pages I don't have a twin of" if query.mine is 'exclude'
 
-    activityTitle = h 'div', {style: {fontWeight: 'bold', marginTop: '14px', marginBottom: '14px'}}, header
+    activityTitle = h 'div', {style: {textAlign:'center', fontSize: 'small', color:'gray', marginTop: '14px' }}, header
 
     now = (new Date).getTime()
     sections = [
@@ -230,11 +230,13 @@ bind = ($item, item) ->
           links.push h 'a.conversation', {href: conversationLink, title: "Conversation", target: "conversation"}, "»"
 
         flags = []
-
         for each, i in sites
-          joint = if sites[i-1]?.page.date == each.page.date then "" else " "
-          flags.unshift joint
-          flags.unshift h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "#{wiki.site(each.site).flag()}", attributes:  {"data-site": each.site, "data-slug": each.page.slug}})
+          if i<10
+            joint = if sites[i-1]?.page.date == each.page.date then "" else " "
+            flags.unshift joint
+            flags.unshift h('img.remote', { title: "#{each.site}\n#{wiki.util.formatElapsedTime each.page.date}", src: "#{wiki.site(each.site).flag()}", attributes:  {"data-site": each.site, "data-slug": each.page.slug}})
+          else if i == 10
+            flags.unshift ' ⋯ '
 
 
         activityBody.push h 'div', {style: {clear: 'both'}, id: sites[0].page.slug}, [ h('div', {style: {float: 'left'}}, pageLink), h('div', {style: {textAlign: 'right'}}, [flags, h('div', {style: {float: 'right', marginRight: '-1.1em'}}, links)])]
@@ -305,7 +307,7 @@ bind = ($item, item) ->
   display query, merge(query, Object.keys(wiki.neighborhood))
 
   $('body').on 'new-neighbor-done', (e, site) ->
-    console.log "Pages: ", pages
+    # console.log "Pages: ", pages
     if query.searchTerm
       searchResults = wiki.neighborhoodObject.search(query.searchTerm)
     omitted = 0
