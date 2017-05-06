@@ -1,9 +1,6 @@
 {
   "name": "wiki-plugin-activity",
   "version": "0.3.0-1",
-  "publishConfig": {
-    "tag": "next"
-  },
   "description": "Federated Wiki - Activity Plug-in",
   "keywords": [
     "wiki",
