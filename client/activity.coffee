@@ -271,10 +271,10 @@ bind = ($item, item) ->
               sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
             else
               sites[_.findIndex(sites, ['site', site])] = {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
+    pages = unfilteredPages
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
-    pages = unfilteredPages
     pages = (sites for slug, sites of pages)
     pages.sort (a, b) ->
       if query.sortOrder == "title"
