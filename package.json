@@ -33,11 +33,11 @@
   },
   "devDependencies": {
     "coffeeify": "^3.0.1",
-    "coffeescript": "^2.3.1",
+    "coffeescript": "^2.3.2",
     "expect.js": "*",
     "grunt": "^1.0.3",
     "grunt-browserify": "^5.3.0",
-    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-clean": "^2.0.0",
     "grunt-contrib-watch": "^1.1.0",
     "grunt-git-authors": "~3",
     "grunt-mocha-test": "^0.13.3",
