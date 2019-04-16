@@ -4,11 +4,21 @@
     {
       "type": "paragraph",
       "id": "435d07cf9bf34a70",
-      "text": "Here we list neighborhood pages with those most recently changed listed first. See [[Local Changes]], [[Recycled Pages]]."
+      "text": "List neighborhood pages with those most recently changed pages listed first. "
+    },
+    {
+      "type": "paragraph",
+      "id": "4282e24e8775954c",
+      "text": "See also [[Local Changes]], [[Recycled Pages]]."
     },
     {
       "type": "activity",
       "id": "e9e9f102158e1382"
+    },
+    {
+      "type": "paragraph",
+      "id": "4f860af0b53034d8",
+      "text": "More [[About Activity Plugin]]"
     }
   ],
   "journal": [
@@ -127,6 +137,57 @@
         "text": "Here we list neighborhood pages with those most recently changed listed first. See [[Local Changes]], [[Recycled Pages]]."
       },
       "date": 1508106661080
+    },
+    {
+      "type": "edit",
+      "id": "435d07cf9bf34a70",
+      "item": {
+        "type": "paragraph",
+        "id": "435d07cf9bf34a70",
+        "text": "List neighborhood pages with those most recently changed listed first. "
+      },
+      "date": 1555197080569
+    },
+    {
+      "type": "add",
+      "id": "4282e24e8775954c",
+      "item": {
+        "type": "paragraph",
+        "id": "4282e24e8775954c",
+        "text": "See also [[Local Changes]], [[Recycled Pages]]."
+      },
+      "after": "435d07cf9bf34a70",
+      "date": 1555197101551
+    },
+    {
+      "item": {
+        "type": "factory",
+        "id": "4f860af0b53034d8"
+      },
+      "id": "4f860af0b53034d8",
+      "type": "add",
+      "after": "e9e9f102158e1382",
+      "date": 1555197164857
+    },
+    {
+      "type": "edit",
+      "id": "4f860af0b53034d8",
+      "item": {
+        "type": "paragraph",
+        "id": "4f860af0b53034d8",
+        "text": "More [[About Activity Plugin]]"
+      },
+      "date": 1555197180574
+    },
+    {
+      "type": "edit",
+      "id": "435d07cf9bf34a70",
+      "item": {
+        "type": "paragraph",
+        "id": "435d07cf9bf34a70",
+        "text": "List neighborhood pages with those most recently changed pages listed first. "
+      },
+      "date": 1555197228643
     }
   ]
 }
