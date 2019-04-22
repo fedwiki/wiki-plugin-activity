@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         src: ['client/activity.coffee'],
         dest: 'client/activity.js',
         options: {
-          transform: ['coffeeify'],
+          transform: [['coffeeify', {transpile: []}]],
           browserifyOptions: {
             extentions: ".coffee"
           }

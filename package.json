@@ -32,8 +32,10 @@
     "virtual-dom": "~2"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "coffeeify": "^3.0.1",
-    "coffeescript": "^2.3.2",
+    "coffeescript": "^2.4.1",
     "expect.js": "*",
     "grunt": "^1.0.3",
     "grunt-browserify": "^5.3.0",
