@@ -13,7 +13,8 @@
     },
     {
       "type": "activity",
-      "id": "e9e9f102158e1382"
+      "id": "e9e9f102158e1382",
+      "text": " "
     },
     {
       "type": "paragraph",
@@ -51,7 +52,8 @@
     {
       "item": {
         "type": "activity",
-        "id": "e9e9f102158e1382"
+        "id": "e9e9f102158e1382",
+        "text": " "
       },
       "id": "e9e9f102158e1382",
       "type": "add",
