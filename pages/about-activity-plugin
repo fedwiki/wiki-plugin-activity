@@ -4,7 +4,7 @@
     {
       "type": "paragraph",
       "id": "dee7dd46e18786d6",
-      "text": "The Activity plugin lists pages in your neighborhood. It expand as your neighborhood grows. Page names used on multiple sites are grouped together with the most current site listed first. Read [[More About Activity Plugin]]. "
+      "text": "The Activity plugin lists pages in your neighborhood. It expands as your neighborhood grows. Page names used on multiple sites are grouped together with the most current site listed first. Read [[More About Activity Plugin]]. "
     },
     {
       "type": "activity",
@@ -105,7 +105,7 @@
       "item": {
         "type": "paragraph",
         "id": "dee7dd46e18786d6",
-        "text": "The Activity plugin lists pages in your neighborhood. It expand as your neighborhood grows. Page names used on multiple sites are grouped together with the newest first. Read [[More About Activity Plugin]]. "
+        "text": "The Activity plugin lists pages in your neighborhood. It expands as your neighborhood grows. Page names used on multiple sites are grouped together with the newest first. Read [[More About Activity Plugin]]. "
       },
       "date": 1354076993300
     },
@@ -115,7 +115,7 @@
       "item": {
         "type": "paragraph",
         "id": "dee7dd46e18786d6",
-        "text": "The Activity plugin lists pages in your neighborhood. It expand as your neighborhood grows. Page names used on multiple sites are grouped together with the most current site listed first. Read [[More About Activity Plugin]]. "
+        "text": "The Activity plugin lists pages in your neighborhood. It expands as your neighborhood grows. Page names used on multiple sites are grouped together with the most current site listed first. Read [[More About Activity Plugin]]. "
       },
       "date": 1354077168710
     }
