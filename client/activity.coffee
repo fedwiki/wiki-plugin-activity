@@ -145,7 +145,7 @@ bind = ($item, item) ->
   rootNode = createElement tree
   $item.append rootNode
 
-  unfilteredPages = {}
+  unfilteredPages = new Map() 
   pages = {}
 
   display = (query, pages) ->
@@ -265,13 +265,13 @@ bind = ($item, item) ->
       if query.includeNeighbors or (!query.includeNeighbors and site is location.host) or site == location.host or query.rosterResults[site]
         if !(query.mine is "no" and site is location.host)
           for each in map.sitemap
-            sites = unfilteredPages[each.slug]
-            unfilteredPages[each.slug] = sites = [] unless sites?
+            sites = unfilteredPages.get(each.slug)
+            unfilteredPages.set(each.slug, sites = []) unless sites?
             if _.findIndex(sites, ['site', site]) is -1
               sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
             else
               sites[_.findIndex(sites, ['site', site])] = {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
-    pages = unfilteredPages
+    pages = Object.fromEntries(unfilteredPages)
     for slug, sites of pages
       sites.sort (a, b) ->
         (b.page.date || 0) - (a.page.date || 0)
