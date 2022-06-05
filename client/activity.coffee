@@ -265,8 +265,9 @@ bind = ($item, item) ->
       if query.includeNeighbors or (!query.includeNeighbors and site is location.host) or site == location.host or query.rosterResults[site]
         if !(query.mine is "no" and site is location.host)
           for each in map.sitemap
+            if !unfilteredPages.has(each.slug)
+              unfilteredPages.set(each.slug, [])
             sites = unfilteredPages.get(each.slug)
-            unfilteredPages.set(each.slug, sites = []) unless sites?
             if _.findIndex(sites, ['site', site]) is -1
               sites.push {site: site, page: {slug: each.slug, title: each.title, date: each.date}}
             else
