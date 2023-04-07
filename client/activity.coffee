@@ -250,7 +250,7 @@ bind = ($item, item) ->
     rootNode = patch rootNode, patches
     tree = newTree
 
-    $item.find('.conversation').click (e) ->
+    $item.find('.conversation').on 'click', (e) ->
       e.stopPropagation()
       e.preventDefault()
       this_page = $item.parents('.page') unless e.shiftKey
@@ -314,7 +314,7 @@ bind = ($item, item) ->
     omitted = 0
     display query, merge(query, [site])
 
-  $item.dblclick ->
+  $item.on 'dblclick', () ->
     $('body').off 'new-neighbor-done'
     wiki.textEditor $item, item
 
