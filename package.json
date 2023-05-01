@@ -1,6 +1,6 @@
 {
   "name": "wiki-plugin-activity",
-  "version": "0.5.0-rc.0",
+  "version": "0.5.0",
   "description": "Federated Wiki - Activity Plug-in",
   "keywords": [
     "wiki",
