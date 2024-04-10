@@ -212,7 +212,7 @@ bind = ($item, item) ->
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
 
-        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}", title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{sites[0].page.title || sites[0].page.slug}"
+        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}.html", title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{sites[0].page.title || sites[0].page.slug}"
 
         links = []
 
