@@ -212,7 +212,11 @@ bind = ($item, item) ->
 
         context = if sites[0].site == location.host then "view" else "view => #{sites[0].site}"
 
-        pageLink = h 'a.internal', {href: "/#{sites[0].page.slug}.html", title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{sites[0].page.title || sites[0].page.slug}"
+        if (sites.length is 1 and sites[0].site isnt location.host) or sites.filter((i) -> i.site is location.host).length is 0
+          pageURL = wiki.site(sites[0].site).getURL("/#{sites[0].page.slug}.html")
+        else
+          pageURL = "/#{sites[0].page.slug}.html"
+        pageLink = h 'a.internal', {href: pageURL, title: context, key: sites[0].page.slug ,attributes: {"data-page-name": sites[0].page.slug}}, "#{sites[0].page.title || sites[0].page.slug}"
 
         links = []
 
