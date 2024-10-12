@@ -9,7 +9,6 @@ import { h } from 'virtual-dom';
 import diff from 'virtual-dom/diff.js';
 import patch from 'virtual-dom/patch.js';
 import createElement from 'virtual-dom/create-element.js';
-import _ from 'lodash';
 
 const escape = (line) => {
   return line
@@ -324,10 +323,11 @@ const bind = ($item, item) => {
               unfilteredPages.set(each.slug, []);
             }
             const sites = unfilteredPages.get(each.slug);
-            if (_.findIndex(sites, ['site', site]) === -1) {
+            const index = sites.findIndex((el) => el.site == site)
+            if (index === -1) {
               sites.push({site: site, page: {slug: each.slug, title: each.title, date: each.date}});
             } else {
-              sites[_.findIndex(sites, ['site', site])] = {site: site, page: {slug: each.slug, title: each.title, date: each.date}};
+              sites[index] = {site: site, page: {slug: each.slug, title: each.title, date: each.date}};
             }
           }
         }

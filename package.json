@@ -30,11 +30,9 @@
     "test": "mocha",
     "update-authors": "node scripts/update-authors.cjs"
   },
-  "dependencies": {  },
   "devDependencies": {
     "esbuild": "^0.24.0",
     "expect.js": "*",
-    "lodash": "^4.17.19",
     "mocha": "^10.1.0",
     "virtual-dom": "~2"
   },
