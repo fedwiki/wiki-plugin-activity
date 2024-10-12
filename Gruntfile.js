@@ -16,20 +16,7 @@ module.exports = function (grunt) {
     },
 
     // tidy-up before we start the build
-    clean: ['client/activity.js', 'client/activity.js.map', 'test/test.js', 'test/test.js.map'],
-
-    browserify: {
-      plugin: {
-        src: ['client/activity.coffee'],
-        dest: 'client/activity.js',
-        options: {
-          transform: [[ 'coffeeify', { transpile: { presets: ['@babel/preset-env'] } } ]],
-          browserifyOptions: {
-            extentions: ".coffee"
-          }
-        }
-      }
-    },
+    clean: ['test/test.js', 'test/test.js.map'],
 
     mochaTest: {
       test: {
@@ -40,7 +27,6 @@ module.exports = function (grunt) {
         src: ['test/test.coffee']
       }
     },
-
 
     watch: {
       all: {

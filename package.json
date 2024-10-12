@@ -1,6 +1,6 @@
 {
   "name": "wiki-plugin-activity",
-  "version": "0.6.1",
+  "version": "0.7.0-decaffinated-1",
   "description": "Federated Wiki - Activity Plug-in",
   "keywords": [
     "wiki",
@@ -25,25 +25,18 @@
     }
   ],
   "scripts": {
-    "test": "grunt mochaTest"
+    "clean": "rm client/activity.js client/activity.js.map",
+    "build": "npm run clean; node --no-warnings scripts/build-client.js",
+    "test": "mocha",
+    "update-authors": "node scripts/update-authors.cjs"
   },
-  "dependencies": {
-    "lodash": "^4.17.19",
-    "virtual-dom": "~2"
-  },
+  "dependencies": {  },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
-    "coffeeify": "^3.0.1",
-    "coffeescript": "^2.4.1",
+    "esbuild": "^0.24.0",
     "expect.js": "*",
-    "grunt": "^1.2.1",
-    "grunt-browserify": "^6.0.0",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-git-authors": "~3",
-    "grunt-mocha-test": "^0.13.3",
-    "mocha": "^10.1.0"
+    "lodash": "^4.17.19",
+    "mocha": "^10.1.0",
+    "virtual-dom": "~2"
   },
   "license": "MIT",
   "repository": {
@@ -53,7 +46,8 @@
   "bugs": {
     "url": "https://github.com/fedwiki/wiki-plugin-activity/issues"
   },
+  "type": "module",
   "engines": {
-    "node": ">=6.0"
+    "node": ">=18.x"
   }
 }
