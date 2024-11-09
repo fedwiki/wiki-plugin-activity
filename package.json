@@ -13,16 +13,11 @@
     "url": "http://ward.fed.wiki.org"
   },
   "contributors": [
-    {
-      "name": "Nick Niemeir",
-      "email": "nick.niemeir@gmail.com",
-      "url": "http://nrn.io"
-    },
-    {
-      "name": "Paul Rodwell",
-      "email": "paul.rodwell@btinternet.com",
-      "url": "http://wiki-paul90.rhcloud.com"
-    }
+    "Ward Cunningham <ward@c2.com>",
+    "Nick Niemeir <nick.niemeir@gmail.com>",
+    "Marcin Cieslak <saper@saper.info>",
+    "Paul Rodwell <paul.rodwell@btinternet.com>",
+    "Robert Best <chessscholar@gmail.com>"
   ],
   "scripts": {
     "clean": "rm client/activity.js client/activity.js.map",
