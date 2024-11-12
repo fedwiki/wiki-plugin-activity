@@ -1,3 +1,5 @@
 coverage
-/pages/activity-test---*
+scripts
+test
 meta-client.json
+eslint.config.js
