@@ -1,12 +1,12 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
+import globals from 'globals'
+import pluginJs from '@eslint/js'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
     languageOptions: {
       globals: {
-        wiki: "writable",
+        wiki: 'writable',
         ...globals.browser,
         ...globals.jquery,
         ...globals.mocha,
@@ -14,4 +14,4 @@ export default [
     },
   },
   pluginJs.configs.recommended,
-];
+]
