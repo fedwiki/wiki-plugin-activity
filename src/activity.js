@@ -105,18 +105,18 @@ const parse = (query, text, $item, item) => {
           break
         case 'ROSTER':
           query.includeNeighbors = false
-          const items = $('.item:lt(' + $('.item').index($item) + ')')
-          const sources = items.filter('.roster-source')
-          sources.each((i, source) => {
-            const roster = source.getRoster()
-            for (const [key, value] of Object.entries(roster)) {
-              if (key.toLowerCase().indexOf(arg.toLowerCase()) >= 0) {
-                for (const site of value) {
-                  query.rosterResults[site] = true
+          $('.item:lt(' + $('.item').index($item) + ')')
+            .filter('.roster-source')
+            .each((i, source) => {
+              const roster = source.getRoster()
+              for (const [key, value] of Object.entries(roster)) {
+                if (key.toLowerCase().indexOf(arg.toLowerCase()) >= 0) {
+                  for (const site of value) {
+                    query.rosterResults[site] = true
+                  }
                 }
               }
-            }
-          })
+            })
           if (!query.rosterResults[location.host]) {
             query.mine = 'no'
           }
