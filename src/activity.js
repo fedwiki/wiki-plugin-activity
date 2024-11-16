@@ -40,7 +40,7 @@ const open_conversation = (this_page, uri) => {
   }
 }
 
-const parse = (query, text, $item, item) => {
+const parse = (query, text, $item) => {
   query.listing = []
   query.errors = 0
   const lines = text.split(/\r?\n/)
@@ -399,7 +399,7 @@ const bind = ($item, item) => {
 
   const query = {}
   setDefaults(query)
-  parse(query, item.text || '', $item, item)
+  parse(query, item.text || '', $item)
 
   omitted = 0
   display(query, merge(query, Object.keys(wiki.neighborhood)))
