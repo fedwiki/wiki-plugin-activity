@@ -3,10 +3,11 @@ import pluginJs from '@eslint/js'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
+  { ignores: ['client/*'] },
   {
     languageOptions: {
       globals: {
-        wiki: 'writable',
+        wiki: 'readonly',
         ...globals.browser,
         ...globals.jquery,
         ...globals.mocha,
