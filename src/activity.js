@@ -157,6 +157,8 @@ const parse = (query, text, $item, item) => {
 const emit = ($item, item) => {}
 
 const bind = ($item, item) => {
+  let omitted = 0
+
   let tree = h('div')
   let rootNode = createElement(tree)
   $item.append(rootNode)
@@ -209,7 +211,7 @@ const bind = ($item, item) => {
 
     const activityBody = []
 
-    let omitted = 0
+    omitted = 0
     for (const sites of pages) {
       if (
         (sites.length >= query.twins || query.twins === 0) &&
@@ -376,7 +378,7 @@ const bind = ($item, item) => {
       }
     })
 
-    let omitted = 0
+    omitted = 0
     return pages.filter((e) => {
       let willInclude = true
       if (query.since) {
@@ -399,12 +401,12 @@ const bind = ($item, item) => {
   setDefaults(query)
   parse(query, item.text || '', $item, item)
 
-  let omitted = 0
+  omitted = 0
   display(query, merge(query, Object.keys(wiki.neighborhood)))
 
   $('body').on('new-neighbor-done', (e, site) => {
     if (query.searchTerm) {
-      const searchResults = wiki.neighborhoodObject.search(query.searchTerm)
+      query.searchResults = wiki.neighborhoodObject.search(query.searchTerm)
     }
     omitted = 0
     display(query, merge(query, [site]))
