@@ -10,11 +10,11 @@ import diff from 'virtual-dom/diff.js'
 import patch from 'virtual-dom/patch.js'
 import createElement from 'virtual-dom/create-element.js'
 
-const escape = (line) => {
+const escape = line => {
   return line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
-const setDefaults = (query) => {
+const setDefaults = query => {
   query.since = 0
   query.listing = []
   query.errors = 0
@@ -215,8 +215,8 @@ const bind = ($item, item) => {
     for (const sites of pages) {
       if (
         (sites.length >= query.twins || query.twins === 0) &&
-        (query.mine !== 'only' || sites.some((twin) => twin.site === location.host)) &&
-        (query.mine !== 'exclude' || !sites.some((twin) => twin.site === location.host))
+        (query.mine !== 'only' || sites.some(twin => twin.site === location.host)) &&
+        (query.mine !== 'exclude' || !sites.some(twin => twin.site === location.host))
       ) {
         let smaller
         if (query.sortOrder === 'title') {
@@ -238,7 +238,7 @@ const bind = ($item, item) => {
         const context = sites[0].site === location.host ? 'view' : `view => ${sites[0].site}`
 
         const pageURL =
-          (sites.length === 1 && sites[0].site !== location.host) || !sites.some((i) => i.site === location.host)
+          (sites.length === 1 && sites[0].site !== location.host) || !sites.some(i => i.site === location.host)
             ? wiki.site(sites[0].site).getURL(`/${sites[0].page.slug}.html`)
             : `/${sites[0].page.slug}.html`
 
@@ -331,7 +331,7 @@ const bind = ($item, item) => {
     rootNode = patch(rootNode, patches)
     tree = newTree
 
-    $item.find('.conversation').on('click', (e) => {
+    $item.find('.conversation').on('click', e => {
       e.stopPropagation()
       e.preventDefault()
       const this_page = e.shiftKey ? null : $item.parents('.page')
@@ -355,7 +355,7 @@ const bind = ($item, item) => {
               unfilteredPages.set(each.slug, [])
             }
             const sites = unfilteredPages.get(each.slug)
-            const index = sites.findIndex((el) => el.site == site)
+            const index = sites.findIndex(el => el.site == site)
             if (index === -1) {
               sites.push({ site: site, page: { slug: each.slug, title: each.title, date: each.date } })
             } else {
@@ -379,7 +379,7 @@ const bind = ($item, item) => {
     })
 
     omitted = 0
-    return pages.filter((e) => {
+    return pages.filter(e => {
       let willInclude = true
       if (query.since) {
         if (e[0].page.date <= query.since || e[0].page.date === undefined) {
@@ -388,7 +388,7 @@ const bind = ($item, item) => {
         }
       }
       if (query.searchTerm && willInclude) {
-        if (!query.searchResults.finds.some((finds) => finds.page === e[0].page)) {
+        if (!query.searchResults.finds.some(finds => finds.page === e[0].page)) {
           willInclude = false
           omitted++
         }

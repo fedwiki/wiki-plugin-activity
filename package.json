@@ -20,8 +20,10 @@
     "Robert Best <chessscholar@gmail.com>"
   ],
   "scripts": {
-    "clean": "rm client/activity.js client/activity.js.map",
     "build": "npm run clean; mocha; node --no-warnings scripts/build-client.js",
+    "clean": "rm client/activity.js client/activity.js.map",
+    "prettier:format": "prettier --write './**/*.js'",
+    "prettier:check": "prettier --check ./**/*.js",
     "test": "mocha",
     "update-authors": "node scripts/update-authors.cjs"
   },

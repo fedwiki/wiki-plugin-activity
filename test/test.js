@@ -13,7 +13,7 @@ describe('activity plugin', () => {
   })
 
   describe('since', () => {
-    const hours = (epoch) => {
+    const hours = epoch => {
       return Math.round((epoch - Date.now()) / (60 * 60 * 1000))
     }
 

@@ -7,7 +7,7 @@ const priorAuthors = [
   'Marcin Cieslak <saper@saper.info>',
 ]
 
-gitAuthors.updatePackageJson({ priorAuthors: priorAuthors }, (error) => {
+gitAuthors.updatePackageJson({ priorAuthors: priorAuthors }, error => {
   if (error) {
     console.log('Error: ', error)
   }
