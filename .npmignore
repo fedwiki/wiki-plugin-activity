@@ -4,6 +4,6 @@ test
 meta-client.json
 eslint.config.js
 .github
-.prettuer*
+.prettier*
 .vscode
 .zed
