@@ -3,3 +3,7 @@ scripts
 test
 meta-client.json
 eslint.config.js
+.github
+.prettuer*
+.vscode
+.zed
