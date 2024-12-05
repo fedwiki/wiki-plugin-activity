@@ -154,7 +154,7 @@ const parse = (query, text, $item) => {
   }
 }
 
-const emit = ($item, item) => {}
+const emit = () => {}
 
 const bind = ($item, item) => {
   let omitted = 0
@@ -366,7 +366,7 @@ const bind = ($item, item) => {
       }
     }
     pages = Object.fromEntries(unfilteredPages)
-    for (const [slug, sites] of Object.entries(pages)) {
+    for (const [, sites] of Object.entries(pages)) {
       sites.sort((a, b) => (b.page.date || 0) - (a.page.date || 0))
     }
     pages = Object.values(pages)
