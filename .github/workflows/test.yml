@@ -15,8 +15,8 @@ jobs:
         # Releases https://github.com/nodejs/release#release-schedule
         node-version:
           - 18.x # Maintenance
-          - 20.x # LTS
-          - 22.x # Current
+          - 20.x # Maintenance
+          - 22.x # Active
 
     steps:
       - uses: actions/checkout@v4
