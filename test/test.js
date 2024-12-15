@@ -1,7 +1,7 @@
 // build time tests for activity plugin
 // see http://mochajs.org/
 
-import { activity } from '../src/activity.js'
+import { activity } from '../src/client/activity.js'
 import expect from 'expect.js'
 
 describe('activity plugin', () => {
