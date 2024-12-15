@@ -6,7 +6,7 @@ const version = packJSON.version
 const now = new Date()
 
 let results = await esbuild.build({
-  entryPoints: ['src/activity.js'],
+  entryPoints: ['src/client/activity.js'],
   bundle: true,
   banner: {
     js: `/* wiki-plugin-activity - ${version} - ${now.toUTCString()} */`,
