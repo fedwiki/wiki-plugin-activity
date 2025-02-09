@@ -1,5 +1,5 @@
-/*/*.js
-/*/*.map
-/pages/activity-test---*
+client/activity.*
+coverage
 node_modules
 npm-debug.log
+meta-client.json

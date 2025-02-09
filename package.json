@@ -1,6 +1,6 @@
 {
   "name": "wiki-plugin-activity",
-  "version": "0.6.1",
+  "version": "0.7.0-rc.2",
   "description": "Federated Wiki - Activity Plug-in",
   "keywords": [
     "wiki",
@@ -13,37 +13,30 @@
     "url": "http://ward.fed.wiki.org"
   },
   "contributors": [
-    {
-      "name": "Nick Niemeir",
-      "email": "nick.niemeir@gmail.com",
-      "url": "http://nrn.io"
-    },
-    {
-      "name": "Paul Rodwell",
-      "email": "paul.rodwell@btinternet.com",
-      "url": "http://wiki-paul90.rhcloud.com"
-    }
+    "Ward Cunningham <ward@c2.com>",
+    "Nick Niemeir <nick.niemeir@gmail.com>",
+    "Marcin Cieslak <saper@saper.info>",
+    "Paul Rodwell <paul.rodwell@btinternet.com>",
+    "Robert Best <chessscholar@gmail.com>"
   ],
   "scripts": {
-    "test": "grunt mochaTest"
-  },
-  "dependencies": {
-    "lodash": "^4.17.19",
-    "virtual-dom": "~2"
+    "build": "npm run clean; mocha; node --no-warnings scripts/build-client.js",
+    "clean": "rm client/activity.js client/activity.js.map",
+    "prettier:format": "prettier --write './**/*.js'",
+    "prettier:check": "prettier --check ./**/*.js",
+    "test": "mocha",
+    "update-authors": "node scripts/update-authors.cjs"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
-    "coffeeify": "^3.0.1",
-    "coffeescript": "^2.4.1",
+    "@eslint/js": "^9.14.0",
+    "esbuild": "^0.24.0",
+    "eslint": "^9.14.0",
     "expect.js": "*",
-    "grunt": "^1.2.1",
-    "grunt-browserify": "^6.0.0",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-git-authors": "~3",
-    "grunt-mocha-test": "^0.13.3",
-    "mocha": "^10.1.0"
+    "globals": "^15.12.0",
+    "grunt-git-authors": "^3.2.0",
+    "mocha": "^10.1.0",
+    "prettier": "3.3.3",
+    "virtual-dom": "~2"
   },
   "license": "MIT",
   "repository": {
@@ -53,7 +46,8 @@
   "bugs": {
     "url": "https://github.com/fedwiki/wiki-plugin-activity/issues"
   },
+  "type": "module",
   "engines": {
-    "node": ">=6.0"
+    "node": ">=18.x"
   }
 }
