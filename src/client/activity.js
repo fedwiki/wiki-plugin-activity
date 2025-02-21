@@ -239,7 +239,7 @@ const bind = ($item, item) => {
 
         const pageURL =
           (sites.length === 1 && sites[0].site !== location.host) || !sites.some(i => i.site === location.host)
-            ? wiki.site(sites[0].site).getURL(`/${sites[0].page.slug}.html`)
+            ? wiki.site(sites[0].site).getURL(`${sites[0].page.slug}.html`)
             : `/${sites[0].page.slug}.html`
 
         const pageLink = h(
