@@ -169,9 +169,10 @@ const bind = ($item, item) => {
   const display = (query, pages) => {
     // Catch query errors
     if (query.errors) {
-      const newTree = h('div', h('p', query.listing.join('<br>')))
+      const newTree = h('div', h('p', { innerHTML: query.listing.join('<br>') }))
       const patches = diff(tree, newTree)
       rootNode = patch(rootNode, patches)
+      tree = newTree
       return
     }
 
@@ -339,9 +340,26 @@ const bind = ($item, item) => {
     })
   }
 
+  const removeNeighbor = site => {
+    unfilteredPages.forEach((sites, slug) => {
+      const filteredSites = sites.filter(e => e.site != site)
+      if (filteredSites.length > 0) {
+        if (sites.length != filteredSites.length) {
+          unfilteredPages.set(slug, filteredSites)
+        }
+      } else {
+        unfilteredPages.delete(slug)
+      }
+    })
+  }
+
   const merge = (query, neighborhoodSites) => {
     for (const site of neighborhoodSites) {
       const map = wiki.neighborhood[site]
+      if (!map) {
+        removeNeighbor(site)
+        continue
+      }
       if (map.sitemapRequestInflight || !map.sitemap) continue
       if (
         query.includeNeighbors ||
