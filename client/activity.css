@@ -1,0 +1,7 @@
+.activity a[href] {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 380px;
+  display: inline-block;
+  white-space: nowrap;
+}

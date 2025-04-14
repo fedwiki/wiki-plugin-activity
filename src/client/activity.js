@@ -154,7 +154,11 @@ const parse = (query, text, $item) => {
   }
 }
 
-const emit = () => {}
+const emit = () => {
+  if (!$("link[href='/plugins/activity/activity.css']").length) {
+    $('<link rel="stylesheet" href="/plugins/activity/activity.css" type="text/css">').appendTo('head')
+  }
+}
 
 const bind = ($item, item) => {
   let omitted = 0

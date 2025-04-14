@@ -1,4 +1,5 @@
-client/activity.*
+client/activity.js
+client/activity.js.map
 coverage
 node_modules
 npm-debug.log
