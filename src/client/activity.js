@@ -410,7 +410,7 @@ const bind = ($item, item) => {
         }
       }
       if (query.searchTerm && willInclude) {
-        if (!query.searchResults.finds.some(finds => finds.page === e[0].page)) {
+        if (!query.searchResults.finds.some(finds => finds.page.slug == e[0].page.slug)) {
           willInclude = false
           omitted++
         }
