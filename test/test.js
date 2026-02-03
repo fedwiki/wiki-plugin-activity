@@ -2,6 +2,7 @@
 // see http://mochajs.org/
 
 import { activity } from '../src/client/activity.js'
+import { describe, it } from 'node:test'
 import expect from 'expect.js'
 
 describe('activity plugin', () => {
