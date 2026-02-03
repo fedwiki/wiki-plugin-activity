@@ -28,13 +28,13 @@
     "update-authors": "node scripts/update-authors.cjs"
   },
   "devDependencies": {
-    "@eslint/js": "^9.24.0",
-    "esbuild": "^0.25.2",
-    "eslint": "^9.24.0",
+    "@eslint/js": "^9.39.2",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
     "expect.js": "*",
-    "globals": "^16.0.0",
+    "globals": "^17.3.0",
     "grunt-git-authors": "^3.2.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.8.1",
     "virtual-dom": "~2"
   },
   "license": "MIT",
