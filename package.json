@@ -20,7 +20,7 @@
     "Robert Best <chessscholar@gmail.com>"
   ],
   "scripts": {
-    "build": "npm run clean; mocha; node --no-warnings scripts/build-client.js",
+    "build": "npm run clean; npm run test; node scripts/build-client.js",
     "clean": "rm client/activity.js client/activity.js.map",
     "prettier:format": "prettier --write './**/*.js'",
     "prettier:check": "prettier --check ./**/*.js",
@@ -28,9 +28,9 @@
     "update-authors": "node scripts/update-authors.cjs"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "esbuild": "^0.27.2",
-    "eslint": "^9.39.2",
+    "@eslint/js": "^10.0.1",
+    "esbuild": "^0.27.3",
+    "eslint": "^10.0.0",
     "expect.js": "*",
     "globals": "^17.3.0",
     "grunt-git-authors": "^3.2.0",
@@ -47,6 +47,6 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=18.x"
+    "node": ">=22.x"
   }
 }
