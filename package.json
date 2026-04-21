@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "esbuild": "^0.27.3",
+    "esbuild": "^0.28.0",
     "eslint": "^10.0.0",
     "expect.js": "*",
     "globals": "^17.3.0",
