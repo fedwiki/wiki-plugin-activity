@@ -1,6 +1,7 @@
 client/activity.js
 client/activity.js.map
 coverage
+cve-report
 node_modules
 npm-debug.log
 meta-client.json
